@@ -1,10 +1,10 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond $1 !^(index\.php|guide|robots\.txt)
+	RewriteCond $1 !^(index\.php|bootstrap|guide|assets|robots\.txt)
 	RewriteRule ^(.*)$ index.php/$1 [L]
+
+	ErrorDocument 403 /errors
 </IfModule>
 
 <IfModule !mod_rewrite.c>

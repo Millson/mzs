@@ -4,7 +4,9 @@ class Main extends MZS_Controller {
 
 	public function index()
 	{
-		echo 111;
+		$this->m_data['title'] = 'MZS Admin';
+
+		$this->load->view('admin/main', $this->m_data);
 	}
 }
 
