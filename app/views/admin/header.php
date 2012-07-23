@@ -8,7 +8,7 @@
 		<meta name="author" content="" />
 
 		<!-- Le styles -->
-		<link href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+		<link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" />
 		<style>
 			body {padding-top: 60px;}
 		</style>
