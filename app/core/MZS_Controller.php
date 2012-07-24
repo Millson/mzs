@@ -8,6 +8,10 @@ class MZS_Controller extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->load->database();
+
+		$this->load->library('session');
+		
 		$this->output->enable_profiler(TRUE);
 	}
 }
