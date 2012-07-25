@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title><?php echo $title; ?></title>
+		<title><?php echo $site_title; ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta name="author" content="" />
@@ -27,20 +27,25 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="<?php echo site_url('admin'); ?>">MZS Admin</a>
+					<a class="brand" href="<?php echo site_url('admin'); ?>">MZSAdmin</a>
 					<div class="nav-collapse">
 						<ul class="nav">
 							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Posts<b class="caret"></b></a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">日志<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another</a></li>
-									<li class="divider"></li>
-									<li class="nav-header">Nav header</li>
-									<li><a href="#">A</a></li>
-									<li><a href="#">B</a></li>
+									<li><a href="<?php echo site_url('admin/post'); ?>">日志列表</a></li>
+									<li><a href="<?php echo site_url('admin/post/edit'); ?>">发表新日志</a></li>
 								</ul>
 							</li>
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">页面<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="<?php echo site_url('admin/page'); ?>">页面列表</a></li>
+									<li><a href="<?php echo site_url('admin/page/edit'); ?>">创建新页面</a></li>
+								</ul>
+							</li>
+							<li><a href="<?php echo site_url('admin/category'); ?>">分类</a></li>
+							<li><a href="<?php echo site_url('admin/tag'); ?>">标签</a></li>
 						</ul>
 					</div>
 				</div>

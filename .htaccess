@@ -4,7 +4,7 @@
 	RewriteCond $1 !^(index\.php|bootstrap|guide|assets|robots\.txt)
 	RewriteRule ^(.*)$ index.php/$1 [L]
 
-	ErrorDocument 403 /errors
+	ErrorDocument 403 http://mzs.com/errors
 </IfModule>
 
 <IfModule !mod_rewrite.c>
