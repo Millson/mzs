@@ -6,7 +6,3 @@
 
 	ErrorDocument 403 http://mzs.com/errors
 </IfModule>
-
-<IfModule !mod_rewrite.c>
-	ErrorDocument 404 /index.php
-</IfModule>
