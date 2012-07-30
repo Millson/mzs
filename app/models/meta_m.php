@@ -9,7 +9,7 @@ class Meta_m extends CI_Model
 		parent::__construct();
 	}
 
-	public function get_all($type = 'category')
+	public function fetch_all($type = 'category')
 	{
 		$this->db->order_by('mid');
 		$query = $this->db->get_where($this->table, array('type'=>$type));
@@ -17,7 +17,7 @@ class Meta_m extends CI_Model
 		return $query->result_array();
 	}
 
-	public function get_by_mid($mid, $type = 'category')
+	public function fetch_by_mid($mid, $type = 'category')
 	{
 		$query = $this->db->get_where($this->table, array('mid'=>$mid, 'type'=>$type));
 
@@ -28,7 +28,7 @@ class Meta_m extends CI_Model
 		return $query->row_array();
 	}
 
-	public function get_by_name($name, $type = 'category')
+	public function fetch_by_name($name, $type = 'category')
 	{
 		$query = $this->db->get_where($this->table, array('name'=>$name, 'type'=>$type));
 
@@ -39,15 +39,13 @@ class Meta_m extends CI_Model
 		return $query->row_array();
 	}
 
-	public function get_by_pid($pid, $type = 'category')
+	public function fetch_by_pid($pid, $type = 'category')
 	{
-		$this->db->select($this->table . '.mid');
-		$this->db->from($this->table);
 		$this->db->join('relation', 'relation.mid = ' . $this->table . '.mid');
 		$this->db->where('relation.pid', $pid);
 		$this->db->where($this->table . '.type', $type);
 
-		$query = $this->db->get();
+		$query = $this->db->get($this->table);
 
 		return $query->result_array();
 	}
@@ -73,16 +71,17 @@ class Meta_m extends CI_Model
 		$this->db->update($this->table);
 	}
 
-	public function add_meta($name, $type = 'category', $mid = 0)
+	public function edit_meta($name, $type = 'category', $mid)
 	{
 		$slug = url_title($name);
 	
 		if(! $slug) {
 			return null;
 		}
-	
+
+		//更新现有数据
 		if( $mid != 0 ) {
-			$row = $this->get_by_mid($mid, $type);
+			$row = $this->fetch_by_mid($mid, $type);
 
 			if($row) {
 				$this->db->set('name', $name);
@@ -92,8 +91,11 @@ class Meta_m extends CI_Model
 
 				return $mid;
 			}
+
+			return null;
 		}
 
+		//新数据
 		$data = array(
 			'slug' 		=> $slug,
 			'name'		=> $name,
@@ -117,12 +119,12 @@ class Meta_m extends CI_Model
 				continue;
 			}
 
-			$row = $this->get_by_name($tag, 'tag');
+			$row = $this->fetch_by_name($tag, 'tag');
 
 			if ($row) {
 				$result[] = $row['mid'];
 			} else {
-				$mid = $this->add_meta($tag, 'tag');
+				$mid = $this->edit_meta($tag, 'tag');
 				
 				if($mid) {
 					$result[] = $mid;

@@ -9,14 +9,15 @@ class Post extends MZS_Controller {
 		$this->load->model('post_m');
 	}
 
-	public function index()
+	public function index($category = 0, $page = 0)
 	{
 		//TODO 文章列表
 		$this->m_data['page_name'] = '日志列表';
 
-		$this->m_data['posts'] = $this->post_m->get_by_page();
+		$this->m_data['posts'] = $this->post_m->fetch($category, $page);
 
-		$this->load->view('admin/post', $this->m_data);
+		var_dump($this->m_data['post']);
+	//	$this->load->view('admin/post', $this->m_data);
 	}
 
 	public function edit()
@@ -24,11 +25,10 @@ class Post extends MZS_Controller {
 		if( $this->input->post() ) {
 		}
 
-		//TODO 编辑文章
 		$this->m_data['page_name'] = '写新日志';
 
 		$this->load->model('meta_m');
-		$categories = $this->meta_m->get_all();
+		$categories = $this->meta_m->fetch_all();
 
 		foreach($categories as $category) {
 			$this->m_data['categories'][$category['mid']] = $category['name'];

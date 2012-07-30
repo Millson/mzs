@@ -4,11 +4,11 @@ class Main extends MZS_Controller {
 
 	public function index()
 	{
-		$this->m_data['site_title'] = 'MZS Admin';
+		$this->m_data['page_name'] = '管理首页';
 
 		$this->load->view('admin/main', $this->m_data);
 	}
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file main.php */
+/* Location: ./app/controllers/main.php */

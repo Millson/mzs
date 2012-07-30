@@ -11,11 +11,31 @@ class Post_m extends CI_Model
 		$this->load->model('meta_m');
 	}
 
-	public function get_by_page($page = 0)
+	public function fetch($mid = 0, $page = 0)
 	{
+		if($mid != 0) {
+			$this->db->join('relation', 'relation.pid = ' . $this->table . '.pid');
+			$this->db->where('relation.mid', $mid);
+		}
+
+		$this->db->limit($page, 20);
+
+		$query = $this->db->get($this->table);
+
+		$result = $query->result_array();
+
+		if( ! $result ) {
+			//redirect('admin/post');
+		}
+
+		foreach($result as &$value) {
+			$this->filter($value);
+		}
+
+		return $result;
 	}
 
-	public function get_by_pid($pid)
+	public function fetch_by_pid($pid)
 	{
 		$this->db->where('pid', $pid);
 		$query = $this->db->get($this->table);
@@ -24,7 +44,17 @@ class Post_m extends CI_Model
 			return false;
 		}
 
-		return $query->row_array();
+		$result = $query->row_array();
+
+		$this->filter( $result[0] );
+
+		return $result[0];
+	}
+
+	private function filter( &$post )
+	{
+		$post['categories'] = $this->meta_m->fetch_by_pid($post['pid'], 'category');
+		$post['tags'] = $this->meta_m->fetch_by_pid($post['pid'], 'tag');
 	}
 
 	public function publish()
@@ -44,10 +74,8 @@ class Post_m extends CI_Model
 			$categories = array('1');
 		}
 
-		$this->set_categories($pid, $categories);
-
-		//处理标签
-		$this->set_tags($pid, $this->input->post('tags'));
+		$this->set_meta($pid, $categories, 'category');
+		$this->set_meta($pid, $this->input->post('tags'), 'tag');
 	}
 
 	public function del_post($pid)
@@ -55,8 +83,8 @@ class Post_m extends CI_Model
 		$this->db->where('pid', $pid);
 		$this->db->delete( array($this->table, 'comment', 'relation') );
 
-		$this->set_categories($pid, null);
-		$this->set_tags($pid, null);
+		$this->set_meta($pid, null);
+		$this->set_meta($pid, null, 'tag');
 	}
 
 	private function new_post()
@@ -91,53 +119,35 @@ class Post_m extends CI_Model
 		$this->db->update($this->table, $data);
 	}
 
-	private function set_categories($pid, array $categories)
+	private function set_meta($pid, $metas, $type = 'category')
 	{
-		$categories = array_unique(array_map('trim', $categories));
+		//category $metas为数组; tag $metas为逗号分隔的字符串
+		if($type == 'category') {
+			$metas = array_unique(array_map('trim', $metas));
+		}else{
+			$metas = str_replace(', ', ',', $metas);
+			$metas = array_unique(array_map('trim', explode(',', $metas)));
+		}
 
-		//取出已有category
-		$exist_categories = $this->meta_m->get_by_pid($pid);
+		$exist_metas = $this->meta_m->fetch_by_pid($pid, $type);
 
-		//删除已有category
-		if($exist_categories) {
-			foreach($exist_categories as $category) {
-				$this->meta_m->del_relation($pid, $category);
+		if($exist_metas) {
+			foreach($exist_metas as $meta) {
+				$this->meta_m->del_relation($pid, $meta['mid']);
 			}
 		}
 
-		//插入新category
-		if( $categories ) {
-			foreach($categories as $category) {
-				if(! $this->meta_m->get_by_mid($category) ) {
+		if($type == 'tag') {
+			$metas = $this->meta_m->insert_tags($metas); //插入新tag
+		}
+
+		if($metas) {
+			foreach($metas as $mid) {
+				if($type == 'category' && $this->meta_m->fetch_by_mid($mid) ) {
 					continue;
 				}
 
-				$this->meta_m->add_relation($pid, $category);
-			}
-		}
-	}
-
-	private function set_tags($pid, $tags)
-	{
-		$tags = str_replace('，', ',', $tags);
-		$tags = array_unique(array_map('trim', explode(',', $tags)));
-
-		//取出已有tags
-		$exist_tags = $this->meta_m->get_by_pid($pid, 'tag');
-
-		//删除已有tags
-		if( $exist_tags ) {
-			foreach( $exist_tags as $tag ) {
-				$this->meta_m->del_relation($pid, $tag);
-			}
-		}
-
-		$insert_tags = $this->meta_m->insert_tags($tags);
-
-		//添加tags
-		if($insert_tags) {
-			foreach($insert_tags as $tag) {
-				$this->meta_m->add_relation($pid, $tag);
+				$this->meta_m->add_relation($pid, $mid);
 			}
 		}
 	}
