@@ -16,17 +16,14 @@ class Post extends MZS_Controller {
 
 		$this->m_data['posts'] = $this->post_m->fetch($category, $page);
 
-		var_dump($this->m_data['post']);
-	//	$this->load->view('admin/post', $this->m_data);
+		$this->load->view('admin/post', $this->m_data);
 	}
 
-	public function edit()
+	public function edit($pid = 0)
 	{
-		if( $this->input->post() ) {
-		}
-
 		$this->m_data['page_name'] = '写新日志';
-
+		$this->m_data['button_name'] = '提交';
+		
 		$this->load->model('meta_m');
 		$categories = $this->meta_m->fetch_all();
 
@@ -34,7 +31,27 @@ class Post extends MZS_Controller {
 			$this->m_data['categories'][$category['mid']] = $category['name'];
 		}
 
+		$this->m_data['category_select'] = array();
+
 		$this->load->helper('form');
+
+		$this->m_data['hidden']['type'] = 'post';
+
+		if($pid != 0) {
+			$this->m_data['post'] = $this->post_m->fetch_by_pid($pid);
+
+			if( ! $this->m_data['post'] ) {
+				redirect('admin/post/edit');
+			}
+
+			$this->m_data['hidden']['pid'] = $pid;
+			$this->m_data['page_name'] = '编辑日志';
+			$this->m_data['button_name'] = '更新';
+
+			foreach($this->m_data['post']['categories'] as $category) {
+				$this->m_data['category_select'][] = $category['mid'];
+			}
+		}
 
 		$this->load->view('admin/post_edit', $this->m_data);
 	}
