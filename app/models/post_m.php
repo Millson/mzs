@@ -37,6 +37,28 @@ class Post_m extends CI_Model
 
 		return $result;
 	}
+	
+	public function fetch_by_mid($mid)
+	{
+		$this->db->join('relation', 'relation.pid = ' . $this->table . '.pid');
+		$this->db->where('relation.mid', $mid);
+		$this->db->where($this->table . '.type', 'post');
+		$this->db->order_by($this->table . '.pid', 'desc');
+
+		$query = $this->db->get($this->table);
+
+		if( $query->num_rows() == 0 ) {
+			die('404');
+		}
+
+		$result = $query->result_array();
+
+		foreach($result as &$value) {
+			$this->filter($value);
+		}
+
+		return $result;
+	}
 
 	public function fetch_by_slug($slug, $type = 'post')
 	{
@@ -205,3 +227,6 @@ class Post_m extends CI_Model
 		}
 	}
 }
+
+/* End of file post_m.php */
+/* Location: ./app/models/post_m.php */

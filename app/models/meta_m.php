@@ -39,6 +39,17 @@ class Meta_m extends CI_Model
 		return $query->row_array();
 	}
 
+	public function fetch_by_slug($slug, $type = 'category')
+	{
+		$query = $this->db->get_where($this->table, array('slug'=>$slug, 'type'=>$type));
+
+		if($query->num_rows() == 0) {
+			return false;
+		}
+
+		return $query->row_array();
+	}
+
 	public function fetch_by_pid($pid, $type = 'category')
 	{
 		$this->db->join('relation', 'relation.mid = ' . $this->table . '.mid');

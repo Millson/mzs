@@ -35,5 +35,5 @@ class Main extends MZS_Controller
 	}
 }
 
-/* End of file welcome.php */
-/* Location: ./app/controllers/welcome.php */
+/* End of file main.php */
+/* Location: ./app/controllers/main.php */

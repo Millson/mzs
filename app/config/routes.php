@@ -41,12 +41,7 @@
 $route['default_controller'] = "main";
 $route['404_override'] = 'errors';
 $route['post/(:any)'] = 'post/index/$1';
-
-//old pages
-$oldpages = array('flashplayer-download-directly', 'About-Me', 'visitors-wall', 'blog-archive', 'tag-cloud', 'message-board');
-foreach($oldpages as $page) {
-	$route[$page] = 'page/' . $page;
-}
+$route['category/(:any)'] = 'category/index/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
