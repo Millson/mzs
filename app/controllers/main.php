@@ -11,6 +11,10 @@ class Main extends MZS_Controller
 
 	public function index()
 	{
+		if( $this->uri->segment(1) ) {
+			die('404');
+		}
+
 		$this->page_name = '首页';
 		$this->page_header = 'Hello World';
 		$this->page_tagline = 'The more you want to get, the more you would be lost!';

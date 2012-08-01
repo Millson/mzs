@@ -127,7 +127,7 @@ class Post_m extends CI_Model
 			$post['tags'] = $this->meta_m->fetch_by_pid($post['pid'], 'tag');
 		}
 
-		$post['date'] = date("Y年m月d日", $post['created']);
+		$post['date'] = date("Y/m/d H:i:s", $post['created']);
 	}
 
 	public function publish()

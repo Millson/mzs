@@ -1,7 +1,6 @@
 <Files ~ "^.(htaccess|htpasswd)$">
 deny from all
 </Files>
-Options -Indexes
 ErrorDocument 404 /errors
 RewriteEngine on
 RewriteBase /

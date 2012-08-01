@@ -2,9 +2,7 @@
 
 class Page extends MZS_Controller
 {
-	public $post;
-	public $prev;
-	public $next;
+	public $page;
 
 	public function __construct()
 	{
@@ -13,26 +11,27 @@ class Page extends MZS_Controller
 
 	public function index()
 	{
+		if( $this->uri->segment(3) ) {
+			die('404');
+		}
+
 		$slug = $this->uri->segment(2);
 
 		if(! $slug) {
 			die('404');
 		}
 
-		$this->post = $this->post_m->fetch_by_slug($slug);
+		$this->page = $this->post_m->fetch_by_slug($slug, 'page');
 
-		if(! $this->post) {
+		if(! $this->page) {
 			die('404');
 		}
 
-		$this->page_name = $this->page_header = $this->post['title'];
+		$this->page_name = $this->page_header = $this->page['title'];
 
-		$this->prev = $this->post_m->fetch_neighbor($this->post['pid'], 'prev');
-		$this->next = $this->post_m->fetch_neighbor($this->post['pid'], 'next');
-
-		$this->load->view('post');
+		$this->load->view('page');
 	}
 }
 
-/* End of file post.php */
-/* Location: ./app/controllers/post.php */
+/* End of file page.php */
+/* Location: ./app/controllers/page.php */

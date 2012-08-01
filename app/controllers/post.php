@@ -13,6 +13,10 @@ class Post extends MZS_Controller
 
 	public function index()
 	{
+		if( $this->uri->segment(3) ) {
+			die('404');
+		}
+
 		$slug = $this->uri->segment(2);
 
 		if(! $slug) {

@@ -41,6 +41,7 @@
 $route['default_controller'] = "main";
 $route['404_override'] = 'errors';
 $route['post/(:any)'] = 'post/index/$1';
+$route['page/(:any)'] = 'page/index/$1';
 $route['category/(:any)'] = 'category/index/$1';
 
 /* End of file routes.php */

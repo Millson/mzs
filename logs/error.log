@@ -91,3 +91,9 @@
 [Wed Aug 01 21:44:19 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Post_m::fetch_by_mid() in /var/www/mzs/app/controllers/category.php on line 28, referer: http://mzs.com/
 [Wed Aug 01 21:44:32 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Post_m::fetch_by_mid() in /var/www/mzs/app/controllers/category.php on line 28, referer: http://mzs.com/
 [Wed Aug 01 21:45:17 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Post_m::fetch_by_mid() in /var/www/mzs/app/controllers/category.php on line 28, referer: http://mzs.com/
+[Wed Aug 01 22:18:57 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
+[Wed Aug 01 22:19:02 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
+[Wed Aug 01 22:19:30 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
+[Wed Aug 01 22:19:46 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
+[Wed Aug 01 22:19:51 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
+[Wed Aug 01 22:46:47 2012] [error] [client 192.168.0.117] Directory index forbidden by Options directive: /var/www/mzs/bootstrap/

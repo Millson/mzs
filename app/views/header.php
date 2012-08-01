@@ -52,17 +52,15 @@
 									<?php endforeach; ?>
 								</ul>
 							</li>
-
-							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">页面<b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<?php foreach($this->menu_pages as $page) : ?>
-									<li><a href="<?php echo site_url('page/' . $page['slug']); ?>"><?php echo $page['title']; ?></a></li>
-									<?php endforeach; ?>
-								</ul>
-							</li>
 						</ul>
 					</div><!--/.nav-collapse -->
+					<div class="pull-right">
+						<ul class="nav">
+							<?php foreach($this->menu_pages as $page) : ?>
+							<li <?php if($this->uri->segment(2) == $page['slug']) : ?>class="active"<?php endif; ?>><a href="<?php echo site_url('page/' . $page['slug']); ?>"><?php echo $page['title']; ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
