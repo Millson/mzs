@@ -2,11 +2,14 @@
 
 class Meta extends MZS_Controller
 {
+	public $button_name;
+	public $hidden;
+	public $metas;
+	public $meta_name;
+
 	public function __construct()
 	{
 		parent::__construct();
-		
-		$this->load->model('meta_m');
 	}
 
 	public function index()
@@ -16,16 +19,16 @@ class Meta extends MZS_Controller
 
 	public function category($mid = 0)
 	{
-		$this->m_data['page_name'] = '分类';
-		$this->m_data['button_name'] = '添加分类';
+		$this->page_name = '分类';
+		$this->button_name = '添加分类';
 		
 		$this->show('category', $mid);
 	}
 
 	public function tag($mid = 0)
 	{
-		$this->m_data['page_name'] = '标签';
-		$this->m_data['button_name'] = '添加标签';
+		$this->page_name = '标签';
+		$this->button_name = '添加标签';
 
 		$this->show('tag', $mid);
 	}
@@ -34,25 +37,25 @@ class Meta extends MZS_Controller
 	{
 		$mid = intval( $mid );
 
-		$this->m_data['hidden']['type'] = $type;
+		$this->hidden['type'] = $type;
 
-		$this->m_data['metas'] = $this->meta_m->fetch_all($type);
+		$this->metas = $this->meta_m->fetch_all($type);
 
-		$this->m_data['meta_name'] = '';
+		$this->meta_name = '';
 
 		if($mid != 0) {
-			foreach($this->m_data['metas'] as $meta) {
+			foreach($this->metas as $meta) {
 				if($meta['mid'] == $mid) {
-					$this->m_data['hidden']['mid'] = $mid;
-					$this->m_data['meta_name'] = $meta['name'];
+					$this->hidden['mid'] = $mid;
+					$this->meta_name = $meta['name'];
 
-					$this->m_data['button_name'] = str_replace('添加', '更新', $this->m_data['button_name']);
+					$this->button_name = str_replace('添加', '更新', $this->button_name);
 					break;
 				}
 			}
 		}
 
-		$this->load->view('admin/'.$type.'.php', $this->m_data);
+		$this->load->view('admin/'.$type.'.php');
 	}
 
 	public function publish()

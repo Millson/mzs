@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title><?php echo $page_name; ?> - MZAdmin</title>
+		<title><?php echo $this->page_name; ?> - MZAdmin</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta name="author" content="" />
@@ -31,25 +31,25 @@
 					<div class="nav-collapse">
 						<ul class="nav">
 							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">日志<b class="caret"></b></a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">创建<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo site_url('admin/post'); ?>">日志列表</a></li>
-									<li><a href="<?php echo site_url('admin/post/edit'); ?>">发表新日志</a></li>
+									<li><a href="<?php echo site_url('admin/post/edit'); ?>">新日志</a></li>
+									<li><a href="<?php echo site_url('admin/post/edit/page'); ?>">新页面</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">页面<b class="caret"></b></a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">管理<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo site_url('admin/page'); ?>">页面列表</a></li>
-									<li><a href="<?php echo site_url('admin/page/edit'); ?>">创建新页面</a></li>
+									<li><a href="<?php echo site_url('admin/post'); ?>">日志列表</a></li>
+									<li><a href="<?php echo site_url('admin/post/index/page'); ?>">页面列表</a></li>
+									<li><a href="<?php echo site_url('admin/meta/category'); ?>">分类</a></li>
+									<li><a href="<?php echo site_url('admin/meta/tag'); ?>">标签</a></li>
 								</ul>
 							</li>
-							<li><a href="<?php echo site_url('admin/meta/category'); ?>">分类</a></li>
-							<li><a href="<?php echo site_url('admin/meta/tag'); ?>">标签</a></li>
 							<li></i><a href="<?php echo site_url(); ?>"><i class="icon-plane icon-white"></i>访问前台</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="container"><h1><?php echo $page_name; ?></h1></div>
+		<div class="container"><h1><?php echo $this->page_name; ?></h1></div>

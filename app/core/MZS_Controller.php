@@ -2,16 +2,32 @@
 
 class MZS_Controller extends CI_Controller {
 
-	protected $m_data;
+	public $page_name;
+	public $page_header;
+	public $page_tagline;
+
+	public $menu_category;
+	public $menu_pages;
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->load->database();
-
-		$this->load->library('session');
-		
 		$this->output->enable_profiler(TRUE);
+
+		if( $this->uri->segment(1) != 'admin') {
+			$this->init_menu();
+		}
+	}
+
+	private function init_menu()
+	{
+		$this->load->model('meta_m');
+
+		$this->menu_category = $this->meta_m->fetch_all();
+
+		$this->load->model('post_m');
+
+		$this->menu_pages = $this->post_m->fetch('page');
 	}
 }

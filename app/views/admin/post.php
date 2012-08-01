@@ -11,11 +11,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($posts as $post) : ?>
+			<?php foreach($this->posts as $post) : ?>
 			<tr>
 				<td><input type="checkbox" /></td>
-				<td><?php echo anchor('admin/post/edit/'.$post['pid'], $post['title']); ?></td>
-				<td><?php $cate = $post['categories'][0]; echo anchor('admin/post/index/'.$cate['mid'], $cate['name']); ?></td>
+				<td><?php echo anchor('admin/post/edit/post/'.$post['pid'], $post['title']); ?></td>
+				<td><?php $cate = $post['categories'][0]; echo anchor('admin/post/index/post/'.$cate['mid'], $cate['name']); ?></td>
 				<td><?php echo $post['date']; ?></td>
 			</tr>
 			<?php endforeach; ?>

@@ -50,21 +50,7 @@ class Meta_m extends CI_Model
 		return $query->result_array();
 	}
 
-	public function add_relation($pid, $mid)
-	{
-		$this->db->insert('relation', array('pid'=>$pid, 'mid'=>$mid));
-
-		$this->meta_count_add($mid);
-
-		return $this->db->insert_id();
-	}
-
-	public function del_relation($pid, $mid)
-	{
-		$this->db->delete('relation', array('pid'=>$pid, 'mid'=>$mid));
-	}
-
-	public function meta_count_add($mid, $value = 1)
+	public function add_count($mid, $value = 1)
 	{
 		$this->db->set('count', 'count + ' . $value, false);
 		$this->db->where('mid', $mid);
@@ -73,8 +59,8 @@ class Meta_m extends CI_Model
 
 	public function edit_meta($name, $type = 'category', $mid)
 	{
-		$slug = url_title($name);
-	
+		$slug = $this->meta_slug($name);
+		
 		if(! $slug) {
 			return null;
 		}
@@ -133,6 +119,16 @@ class Meta_m extends CI_Model
 		}
 
 		return is_array($input_tags) ? $result : current($result);
+	}
+
+	private function meta_slug($str, $default = null, $max_length = 200)
+	{
+		$str = str_replace(array("'", ":", "\\", "/", '"'), "", $str);
+        $str = str_replace(array("+", ",", ' ', '，', ' ', ".", "?", "=", "&", "!", "<", ">", "(", ")", "[", "]", "{", "}"), "-", $str);
+        $str = trim($str, '-');
+        $str = empty($str) ? $default : $str;
+
+        return function_exists('mb_get_info') ? mb_strimwidth($str, 0, 128, '', $this->config->item("charset")) : substr($str, 0, $max_length);
 	}
 }
 

@@ -12,7 +12,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach( $metas as $meta ) : ?>
+					<?php foreach( $this->metas as $meta ) : ?>
 					<tr>
 						<td><a href="<?php echo site_url('admin/meta/category/' . $meta['mid']); ?>"><?php echo $meta['name']; ?></a></td>
 						<td><?php echo $meta['slug']; ?></td>
@@ -23,12 +23,12 @@
 			</table>
 		</div>
 		<div class="span4">
-			<?php echo form_open('admin/meta/publish', array('class'=>'well'), $hidden); ?>
+			<?php echo form_open('admin/meta/publish', array('class'=>'well'), $this->hidden); ?>
 
 			<?php echo form_label('分类名称', 'meta_name'); ?>
-			<?php echo form_input(array('name'=>'meta_name', 'id'=>'meta_name', 'value'=>$meta_name)); ?>
+			<?php echo form_input(array('name'=>'meta_name', 'id'=>'meta_name', 'value'=>$this->meta_name)); ?>
 
-			<?php echo form_submit(array('class'=>'btn btn-primary'), $button_name); ?>
+			<?php echo form_submit(array('class'=>'btn btn-primary'), $this->button_name); ?>
 
 			<?php echo form_close(); ?>
 		</div>

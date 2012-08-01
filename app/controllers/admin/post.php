@@ -2,58 +2,81 @@
 
 class Post extends MZS_Controller {
 
+	public $type;
+	public $posts;
+	public $button_name;
+	public $hidden;
+	public $post;
+	public $category_select;
+	public $tags;
+
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->load->model('post_m');
 	}
 
-	public function index($category = 0, $page = 0)
+	public function index($type = 'post', $category = 0, $page = 0)
 	{
 		//TODO 文章列表
-		$this->m_data['page_name'] = '日志列表';
+		$this->page_name = '日志列表';
+		$this->type = $type;
 
-		$this->m_data['posts'] = $this->post_m->fetch($category, $page);
+		$this->posts = $this->post_m->fetch($type, 20, $category, $page);
 
-		$this->load->view('admin/post', $this->m_data);
+		$this->load->view('admin/'.$type);
 	}
 
-	public function edit($pid = 0)
+	public function edit($type = 'post', $pid = 0)
 	{
-		$this->m_data['page_name'] = '写新日志';
-		$this->m_data['button_name'] = '提交';
+		if($type == 'post') {
+			$this->page_name = '写新日志';
+		}else{
+			$this->page_name = '写新页面';
+		}
+
+		$this->button_name = '提交';
 		
-		$this->load->model('meta_m');
 		$categories = $this->meta_m->fetch_all();
 
 		foreach($categories as $category) {
-			$this->m_data['categories'][$category['mid']] = $category['name'];
+			$this->categories[$category['mid']] = $category['name'];
 		}
 
-		$this->m_data['category_select'] = array();
+		$this->category_select = array();
 
 		$this->load->helper('form');
 
-		$this->m_data['hidden']['type'] = 'post';
+		$this->hidden['type'] = $type;
 
 		if($pid != 0) {
-			$this->m_data['post'] = $this->post_m->fetch_by_pid($pid);
+			$this->post = $this->post_m->fetch_by_pid($pid);
 
-			if( ! $this->m_data['post'] ) {
-				redirect('admin/post/edit');
+			if( ! $this->post ) {
+				redirect('admin/post/edit/'.$type);
 			}
 
-			$this->m_data['hidden']['pid'] = $pid;
-			$this->m_data['page_name'] = '编辑日志';
-			$this->m_data['button_name'] = '更新';
+			$this->hidden['pid'] = $pid;
+			$this->page_name = str_replace('写新', '编辑', $this->page_name);
+			$this->button_name = '更新';
 
-			foreach($this->m_data['post']['categories'] as $category) {
-				$this->m_data['category_select'][] = $category['mid'];
+			if($type == 'post') {
+				if($this->post['categories']) {
+					foreach($this->post['categories'] as $category) {
+						$this->category_select[] = $category['mid'];
+					}
+				}
+
+				$this->tags = '';
+				if($this->post['tags']) {
+					foreach($this->post['tags'] as $tag) {
+						$this->tags .= $tag['name'] . ',';
+					}
+					$this->tags = substr($this->tags, 0, -1);
+				}
 			}
 		}
 
-		$this->load->view('admin/post_edit', $this->m_data);
+		$this->load->view('admin/'.$type.'_edit');
 	}
 
 	public function publish()

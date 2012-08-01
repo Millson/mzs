@@ -7,32 +7,77 @@ class Post_m extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->load->model('meta_m');
 	}
 
-	public function fetch($mid = 0, $page = 0)
+	public function fetch($type = 'post', $limit = 0, $mid = 0, $page = 0)
 	{
 		if($mid != 0) {
 			$this->db->join('relation', 'relation.pid = ' . $this->table . '.pid');
 			$this->db->where('relation.mid', $mid);
 		}
 
-		$this->db->where('type', 'post');
-		$this->db->order_by('pid', 'desc');
-		$this->db->limit(20, $page);
+		$this->db->where($this->table.'.type', $type);
+		$this->db->order_by($this->table.'.pid', 'desc');
+
+		if( $limit != 0 ){
+			$this->db->limit($limit, $page);
+		}
 
 		$query = $this->db->get($this->table);
 
 		$result = $query->result_array();
 		
 		if( ! $result ) {
-			redirect('admin/post');
+			die('404');
 		}
 
 		foreach($result as &$value) {
 			$this->filter($value);
 		}
+
+		return $result;
+	}
+
+	public function fetch_by_slug($slug, $type = 'post')
+	{
+		$this->db->where('slug', $slug);
+		$this->db->where('type', $type);
+		$this->db->limit(1);
+
+		$query = $this->db->get($this->table);
+
+		if($query->num_rows() == 0) {
+			return null;
+		}
+
+		$result = $query->row_array();
+
+		$this->filter( $result );
+
+		return $result;
+	}
+
+	public function fetch_neighbor($pid, $type = 'prev')
+	{
+		if($type == 'prev') {
+			$this->db->order_by('pid', 'desc');
+			$this->db->where('pid <', $pid);
+		}else{
+			$this->db->order_by('pid', 'asc');
+			$this->db->where('pid >', $pid);
+		}
+		$this->db->where('type', 'post');
+		$this->db->limit(1);
+
+		$query = $this->db->get($this->table);
+
+		if($query->num_rows() == 0) {
+			return null;
+		}
+
+		$result = $query->row_array();
+		
+		$this->filter( $result );
 
 		return $result;
 	}
@@ -43,21 +88,24 @@ class Post_m extends CI_Model
 		$query = $this->db->get($this->table);
 
 		if($query->num_rows() == 0) {
-			return false;
+			return null;
 		}
-
+		
 		$result = $query->row_array();
-
+	
 		$this->filter( $result );
 
 		return $result;
 	}
 
-	private function filter( &$post )
+	private function filter( &$post)
 	{
-		$post['categories'] = $this->meta_m->fetch_by_pid($post['pid'], 'category');
-		$post['tags'] = $this->meta_m->fetch_by_pid($post['pid'], 'tag');
-		$post['date'] = date("Y-m-d H:i:s", $post['modified']);
+		if($post['type'] == 'post') {
+			$post['categories'] = $this->meta_m->fetch_by_pid($post['pid'], 'category');
+			$post['tags'] = $this->meta_m->fetch_by_pid($post['pid'], 'tag');
+		}
+
+		$post['date'] = date("Y年m月d日", $post['created']);
 	}
 
 	public function publish()
@@ -65,16 +113,16 @@ class Post_m extends CI_Model
 		if( $this->input->post('pid') ) {
 			$pid = $this->input->post('pid');
 			
-			$this->update_post();
+			$this->update_post($pid);
 		}else{
 			$pid = $this->new_post();
 		}
 
 		//处理分类
 		$categories = $this->input->post('category');
-
+		
 		if( empty($categories) ) {
-			$categories = array('1');
+			$categories = array('23');
 		}
 
 		$this->set_meta($pid, $categories, 'category');
@@ -115,7 +163,7 @@ class Post_m extends CI_Model
 			'content'	=> $this->input->post('content'),
 			'slug'		=> $this->input->post('slug'),
 			'modified'	=> time(),
-			'type'		=> 'post'
+			'type'		=> $this->input->post('type')
 		);
 
 		$this->db->where('pid', $pid);
@@ -136,7 +184,8 @@ class Post_m extends CI_Model
 
 		if($exist_metas) {
 			foreach($exist_metas as $meta) {
-				$this->meta_m->del_relation($pid, $meta['mid']);
+				$this->relation_m->del($pid, $meta['mid']);
+				$this->meta_m->add_count($mid, -1);
 			}
 		}
 
@@ -146,11 +195,12 @@ class Post_m extends CI_Model
 
 		if($metas) {
 			foreach($metas as $mid) {
-				if($type == 'category' && $this->meta_m->fetch_by_mid($mid) ) {
+				if($type == 'category' && $this->relation_m->exist($pid, $mid) ) {
 					continue;
 				}
 
-				$this->meta_m->add_relation($pid, $mid);
+				$this->relation_m->add($pid, $mid);
+				$this->meta_m->add_count($mid);
 			}
 		}
 	}

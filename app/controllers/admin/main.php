@@ -4,9 +4,9 @@ class Main extends MZS_Controller {
 
 	public function index()
 	{
-		$this->m_data['page_name'] = '管理首页';
+		$this->page_name = '管理首页';
 
-		$this->load->view('admin/main', $this->m_data);
+		$this->load->view('admin/main');
 	}
 }
 

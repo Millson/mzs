@@ -4,7 +4,6 @@ class Errors extends CI_Controller {
 
 	public function index()
 	{
-		echo '404 page';
-		//$this->load->view('404');
+		$this->load->view('404');
 	}
 }
