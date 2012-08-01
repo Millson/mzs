@@ -13,25 +13,20 @@
 
 		<!-- Le styles -->
 		<link href="<?php echo base_url('assets/css/bootstrap.css'); ?>" rel="stylesheet" />
-		<style type="text/css" media="screen">
-			body {
-				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-			}
-		</style>
 		<link href="<?php echo base_url('assets/css/bootstrap-responsive.css'); ?>" rel="stylesheet" />
 		<link href="<?php echo base_url('assets/css/style.css'); ?>" rel="stylesheet" type="text/css" media="all" />
 
 		<!-- Le fav and touch icons -->
 		<!-- Update these with your own images
-		<link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>">
-		<link rel="apple-touch-icon" href="<?php echo base_url('assets/images/apple-touch-icon.png'); ?>">
-		<link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url('assets/images/apple-touch-icon-72x72.png'); ?>">
-		<link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url('assets/images/apple-touch-icon-114x114.png'); ?>">
+		<link rel="shortcut icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>">
+		<link rel="apple-touch-icon" href="<?php echo base_url('assets/img/apple-touch-icon.png'); ?>">
+		<link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url('assets/img/apple-touch-icon-72x72.png'); ?>">
+		<link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url('assets/img/apple-touch-icon-114x114.png'); ?>">
 		-->
 	</head>
 
 	<body>
-		<div class="navbar navbar-fixed-top">
+		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -42,28 +37,27 @@
 					<a class="brand" href="<?php echo site_url(); ?>">三水志</a>
 					<div class="nav-collapse">
 						<ul class="nav">
+						<?php foreach($this->permanent_pages as $page) : ?>
+							<li <?php if($this->uri->segment(1) == $page['slug']) : ?>class="active"<?php endif; ?>>
+								<?php echo anchor($page['slug'], $page['title'], array('title'=>$page['title'])); ?>
+							</li>
+						<?php endforeach; ?>
+
 							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">分类<b class="caret"></b></a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Pages<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<?php foreach($this->menu_category as $category) : ?>
-									<li>
-										<?php echo anchor('category/' . $category['slug'], $category['name'], array('title'=>$category['name'])); ?>
+								<?php foreach($this->menu_pages as $page) : ?>
+									<li <?php if($this->uri->segment(2) == $page['slug']) : ?>class="active"<?php endif; ?>>
+										<a href="<?php echo site_url('page/' . $page['slug']); ?>"><?php echo $page['title']; ?></a>
 									</li>
-									<?php endforeach; ?>
+								<?php endforeach; ?>
 								</ul>
 							</li>
 						</ul>
 					</div><!--/.nav-collapse -->
-					<div class="pull-right">
-						<ul class="nav">
-							<?php foreach($this->menu_pages as $page) : ?>
-							<li <?php if($this->uri->segment(2) == $page['slug']) : ?>class="active"<?php endif; ?>><a href="<?php echo site_url('page/' . $page['slug']); ?>"><?php echo $page['title']; ?></a></li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+				</div><!--/.container -->
+			</div><!--/.navbar-inner -->
+		</div><!--/.navbar -->
 
 		<div class="container">
 			<div class="content">

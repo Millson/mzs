@@ -17,8 +17,8 @@ RewriteRule ^(.*)$ /index.php/$1 [L]
 RedirectMatch permanent ^/archives/(.*)$ http://mzs.com/post/$1
 Redirect permanent /flashplayer-download-directly /page/flashplayer-download-directly
 Redirect permanent /About-Me /page/About-Me
-Redirect permanent /blog-archive /archives
-Redirect permanent /tag-cloud /tags
+Redirect permanent /blog-archive /archive
+Redirect permanent /tag-cloud /tag
 Redirect permanent /message-board /message
 
 order deny,allow

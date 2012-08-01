@@ -97,3 +97,5 @@
 [Wed Aug 01 22:19:46 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
 [Wed Aug 01 22:19:51 2012] [error] [client 192.168.0.117] PHP Fatal error:  Call to undefined method Main::segment() in /var/www/mzs/app/controllers/main.php on line 14
 [Wed Aug 01 22:46:47 2012] [error] [client 192.168.0.117] Directory index forbidden by Options directive: /var/www/mzs/bootstrap/
+[Thu Aug 02 01:09:26 2012] [error] [client 192.168.0.117] PHP Parse error:  syntax error, unexpected ';' in /var/www/mzs/app/views/header.php on line 45
+[Thu Aug 02 01:50:03 2012] [error] [client 192.168.0.117] PHP Fatal error:  Cannot access empty property in /var/www/mzs/app/core/MZS_Controller.php on line 25, referer: http://mzs.com/category

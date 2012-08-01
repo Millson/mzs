@@ -6,8 +6,8 @@ class MZS_Controller extends CI_Controller {
 	public $page_header;
 	public $page_tagline;
 
-	public $menu_category;
 	public $menu_pages;
+	public $permanent_pages;
 
 	public function __construct()
 	{
@@ -22,9 +22,11 @@ class MZS_Controller extends CI_Controller {
 
 	private function init_menu()
 	{
-		$this->load->model('meta_m');
-
-		$this->menu_category = $this->meta_m->fetch_all();
+		$this->permanent_pages = array(
+			array('slug'=>'category', 'title'=>'分类'),
+			array('slug'=>'tag', 'title'=>'标签'),
+			array('slug'=>'archive', 'title'=>'归档'),
+		);
 
 		$this->load->model('post_m');
 

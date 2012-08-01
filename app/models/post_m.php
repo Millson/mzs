@@ -9,13 +9,8 @@ class Post_m extends CI_Model
 		parent::__construct();
 	}
 
-	public function fetch($type = 'post', $limit = 0, $mid = 0, $page = 0)
+	public function fetch($type = 'post', $limit = 0, $page = 0)
 	{
-		if($mid != 0) {
-			$this->db->join('relation', 'relation.pid = ' . $this->table . '.pid');
-			$this->db->where('relation.mid', $mid);
-		}
-
 		$this->db->where($this->table.'.type', $type);
 		$this->db->order_by($this->table.'.pid', 'desc');
 
