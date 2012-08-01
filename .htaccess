@@ -13,8 +13,10 @@ RewriteRule ^(.*) http://mzs.com/$1 [R=301,L]
 RewriteCond $1 !^(index\.php|assets|guide|bootstrap|robots\.txt)
 RewriteRule ^(.*)$ /index.php/$1 [L]
 
-# redirect old links
+# redirect old post link
 RedirectMatch permanent ^/archives/(.*)$ http://mzs.com/post/$1
+
+# redirect old page link
 Redirect permanent /flashplayer-download-directly /page/flashplayer-download-directly
 Redirect permanent /About-Me /page/About-Me
 Redirect permanent /blog-archive /archive
