@@ -1,0 +1,25 @@
+<Files ~ "^.(htaccess|htpasswd)$">
+deny from all
+</Files>
+Options -Indexes
+ErrorDocument 404 /errors
+RewriteEngine on
+RewriteBase /
+
+# with no www
+RewriteCond %{HTTP_HOST} ^(www\.mzs\.com)(:80)? [NC]
+RewriteRule ^(.*) http://mzs.com/$1 [R=301,L]
+
+# move index.php
+RewriteCond $1 !^(index\.php|assets|guide|bootstrap|robots\.txt)
+RewriteRule ^(.*)$ /index.php/$1 [L]
+
+# redirect old links
+RedirectMatch permanent ^/archives/(.*)$ http://mzs.com/post/$1
+Redirect permanent /flashplayer-download-directly /page/flashplayer-download-directly
+Redirect permanent /About-Me /page/About-Me
+Redirect permanent /blog-archive /archives
+Redirect permanent /tag-cloud /tags
+Redirect permanent /message-board /message
+
+order deny,allow
