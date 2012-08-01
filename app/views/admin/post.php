@@ -4,6 +4,7 @@
 	<table class="table tabel-striped">
 		<thead>
 			<tr>
+				<th>&nbsp;</th>
 				<th>标题</th>
 				<th>分类</th>
 				<th>日期</th>
@@ -12,8 +13,9 @@
 		<tbody>
 			<?php foreach($posts as $post) : ?>
 			<tr>
-				<td><a href="<?php echo site_url('admin/post/edit/'.$post['pid']); ?>"><?php echo $post['title']; ?></a></td>
-				<td><a href="<?php echo site_url('admin/meta/category/'.$post['mid']); ?>"><?php echo $post['meta_name']; ?></a></td>
+				<td><input type="checkbox" /></td>
+				<td><?php echo anchor('admin/post/edit/'.$post['pid'], $post['title']); ?></td>
+				<td><?php $cate = $post['categories'][0]; echo anchor('admin/post/index/'.$cate['mid'], $cate['name']); ?></td>
 				<td><?php echo $post['date']; ?></td>
 			</tr>
 			<?php endforeach; ?>

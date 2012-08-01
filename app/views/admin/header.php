@@ -46,6 +46,7 @@
 							</li>
 							<li><a href="<?php echo site_url('admin/meta/category'); ?>">分类</a></li>
 							<li><a href="<?php echo site_url('admin/meta/tag'); ?>">标签</a></li>
+							<li></i><a href="<?php echo site_url(); ?>"><i class="icon-plane icon-white"></i>访问前台</a></li>
 						</ul>
 					</div>
 				</div>

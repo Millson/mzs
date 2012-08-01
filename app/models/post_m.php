@@ -18,14 +18,16 @@ class Post_m extends CI_Model
 			$this->db->where('relation.mid', $mid);
 		}
 
-		$this->db->limit($page, 20);
+		$this->db->where('type', 'post');
+		$this->db->order_by('pid', 'desc');
+		$this->db->limit(20, $page);
 
 		$query = $this->db->get($this->table);
 
 		$result = $query->result_array();
-
+		
 		if( ! $result ) {
-			//redirect('admin/post');
+			redirect('admin/post');
 		}
 
 		foreach($result as &$value) {
@@ -46,15 +48,16 @@ class Post_m extends CI_Model
 
 		$result = $query->row_array();
 
-		$this->filter( $result[0] );
+		$this->filter( $result );
 
-		return $result[0];
+		return $result;
 	}
 
 	private function filter( &$post )
 	{
 		$post['categories'] = $this->meta_m->fetch_by_pid($post['pid'], 'category');
 		$post['tags'] = $this->meta_m->fetch_by_pid($post['pid'], 'tag');
+		$post['date'] = date("Y-m-d H:i:s", $post['modified']);
 	}
 
 	public function publish()

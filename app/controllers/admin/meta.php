@@ -36,7 +36,7 @@ class Meta extends MZS_Controller
 
 		$this->m_data['hidden']['type'] = $type;
 
-		$this->m_data['metas'] = $this->meta_m->get_all( $type );
+		$this->m_data['metas'] = $this->meta_m->fetch_all($type);
 
 		$this->m_data['meta_name'] = '';
 
@@ -63,7 +63,7 @@ class Meta extends MZS_Controller
 			redirect('admin/meta/'.$type);
 		}
 
-		$mid = $this->meta_m->add_meta($this->input->post('meta_name'), $type, $this->input->post('mid'));
+		$mid = $this->meta_m->edit_meta($this->input->post('meta_name'), $type, $this->input->post('mid'));
 
 		if($mid) {
 			redirect('admin/meta/'.$type.'/'.$mid);
