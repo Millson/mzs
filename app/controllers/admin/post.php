@@ -2,13 +2,16 @@
 
 class Post extends MZS_Controller {
 
+	public $pid;
 	public $type = 'post';
+	public $categories;
 	public $posts;
-	public $button_name;
 	public $hidden;
 	public $post;
-	public $category_select;
-	public $tags;
+
+	public $select_mids = array();
+	public $tags = '';
+	public $slug = '';
 
 	public function __construct()
 	{
@@ -19,18 +22,18 @@ class Post extends MZS_Controller {
 	{
 		$page = intval($page);
 
-		$this->page_name = '日志列表';
+		$this->page_name = $this->page_header = '日志列表';
 
-		$this->posts = $this->post_m->fetch($this->type, 20, $page);
+		$this->posts = $this->post_m->fetch($this->type, 0, $page);
 
 		$this->load->view('admin/post');
 	}
 
 	public function edit($pid = 0)
 	{
-		$this->page_name = '写新日志';
+		$pid = intval($pid);
 
-		$this->button_name = '提交';
+		$this->page_name = '写新日志';
 
 		$categories = $this->meta_m->fetch_all();
 
@@ -38,25 +41,24 @@ class Post extends MZS_Controller {
 			$this->categories[ $category['mid'] ] = $category['name'];
 		}
 
-		$this->hidden['type'] = 'post';
+		$this->hidden['type'] = $this->type;
 		$this->category_select = array();
 
-		$this->load->helper('form');
-
 		if($pid != 0) {
+			$this->pid = $pid;
+
 			$this->post = $this->post_m->fetch_by_pid($pid);
 
 			if( ! $this->post ) {
-				die('日志不存在');
+				show_404();
 			}
 
 			$this->hidden['pid'] = $pid;
 			$this->page_name = '编辑日志';
-			$this->button_name = '更新';
 
 			if($this->post['categories']) {
 				foreach($this->post['categories'] as $category) {
-					$this->category_select[] = $category['mid'];
+					$this->select_mids[] = $category['mid'];
 				}
 			}
 
@@ -67,7 +69,11 @@ class Post extends MZS_Controller {
 				}
 				$this->tags = substr($this->tags, 0, -1);
 			}
+
+			$this->slug = $this->post['slug'];
 		}
+
+		$this->page_header = $this->page_name;
 
 		$this->load->view('admin/post_edit');
 	}

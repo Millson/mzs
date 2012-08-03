@@ -35,6 +35,8 @@ class Meta extends MZS_Controller
 
 	private function show($type, $mid)
 	{
+		$this->page_header = $this->page_name;
+
 		$mid = intval( $mid );
 
 		$this->hidden['type'] = $type;

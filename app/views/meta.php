@@ -3,12 +3,12 @@
 <div class="row">
 	<div class="span12">
 		<ul class="tag_box inline">
-		<?php foreach($this->metas as $meta) : ?>
-			<li><a href="<?php echo current_url() . "#" . $meta['name'] . "-ref"; ?>"><?php echo $meta['name']; ?><span><?php echo $meta['count']; ?></span></a></li>
+		<?php foreach($this->used_metas as $mid) : ?>
+			<li><a href="<?php echo current_url() . "#" . $this->all_metas[$mid]['slug']; ?>"><?php echo $this->all_metas[$mid]['name']; ?><span><?php echo $this->all_metas[$mid]['count']; ?></span></a></li>
 		<?php endforeach; ?>
 		</ul>
-	<?php foreach($this->archives as $meta_name=>$posts) : ?>
-		<h2 id="<?php echo $meta_name . "-ref"; ?>"><?php echo $meta_name; ?></h2>
+	<?php foreach($this->archives as $mid=>$posts) : ?>
+		<h2 id="<?php echo $this->all_metas[$mid]['slug']; ?>"><?php echo $this->all_metas[$mid]['name']; ?> <span><a href="#"><i class="icon-arrow-up"></i></a></span></h2>
 		<ul>
 		<?php foreach($posts as $post) : ?>
 			<li>

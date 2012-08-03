@@ -1,23 +1,23 @@
 <?php $this->load->view('admin/header'); ?>
 
-<div class="container">
-	<?php echo form_open('admin/page/publish', array('class'=>'well'), $this->hidden); ?>
+<form action="<?php echo site_url('admin/page/publish'); ?>">
 	<div class="row">
 		<div class="span8">
-			<?php echo form_label('页面标题', 'title'); ?>
-			<?php echo form_input(array('value'=>isset($this->post)?$this->post['title']:'', 'name'=>'title', 'id'=>'title', 'class'=>'input-xxlarge', 'placeholder'=>'输入标题', 'style'=>'width:620px;')); ?>
+			<label for="title">页面标题</label>
+			<input type="text" name="title" id="title" class="input-xxlarge" placeholder="输入标题" style="width:100%" value="<?php echo $this->post ? $this->post['title'] : ''; ?>" />
 
-			<?php echo form_label('页面内容', 'content'); ?>
-			<?php echo form_textarea(array('value'=>isset($this->post)?$this->post['content']:'', 'name'=>'content', 'id'=>'content', 'class'=>'input-xxlarge', 'style'=>'width:620px;height:400px;')); ?>
+			<label for="content">页面内容</label>
+			<textarea name="content" id="content" class="input-xxlarge" style="width:100%;height:350px;"><?php echo $this->post ? $this->post['content'] : ''; ?></textarea>
 		</div>
-		<div class="span3">
-			<?php echo form_label('缩略名', 'slug'); ?>
-			<?php echo form_input(array('value'=>isset($this->post)?$this->post['slug']:'', 'name'=>'slug', 'id'=>'slug', 'placeholder'=>'输入缩略名')); ?>
 
-			<?php echo form_submit(array('name'=>'publish', 'class'=>'btn btn-primary'), $this->button_name); ?>
+		<div class="span4">
+			<label for="slug">缩略名</label>
+			<input type="text" name="slug" id="slug" placeholder="输入缩略名" value="<?php echo $this->slug; ?>" style="width:100%;" />
+			<hr />
+
+			<button class="btn btn-primary" type="submit"><?php echo $this->pid != 0 ? 'Update' : 'Publish'; ?></button>
 		</div>
 	</div>
-	<?php echo form_close(); ?>
-</div> <!--/container -->
+</form>
 
 <?php $this->load->view('admin/footer'); ?>

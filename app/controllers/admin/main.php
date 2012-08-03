@@ -4,7 +4,7 @@ class Main extends MZS_Controller {
 
 	public function index()
 	{
-		$this->page_name = '管理首页';
+		$this->page_name = $this->page_header = '管理首页';
 
 		$this->load->view('admin/main');
 	}

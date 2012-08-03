@@ -92,7 +92,7 @@ if ( ! function_exists('elements'))
 {
 	function elements($items, $array, $default = FALSE)
 	{
-		$return = array();
+		return = array();
 		
 		if ( ! is_array($items))
 		{

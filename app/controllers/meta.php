@@ -3,7 +3,8 @@
 class Meta extends MZS_Controller
 {
 	public $archives;
-	public $metas;
+	public $all_metas;
+	public $used_metas;
 
 	public function __construct()
 	{
@@ -18,11 +19,7 @@ class Meta extends MZS_Controller
 
 		$type = $this->uri->segment(1);
 
-		$this->metas = $this->meta_m->fetch_all($type);
-
-		if(! $this->metas) {
-			die('404');
-		}
+		$metas = $this->meta_m->fetch_all($type);
 
 		if($type == 'tag') {
 			$type = 'tags';
@@ -39,9 +36,17 @@ class Meta extends MZS_Controller
 
 			if($post[ $type ]) {
 				foreach($post[ $type ] as $meta) {
-					$this->archives[ $meta['name'] ][] = $post;
+					$this->archives[ $meta['mid'] ][] = $post;
 				}
 			}
+		}
+
+		foreach($metas as $val) {
+			$this->all_metas[ $val['mid'] ] = $val;
+		}
+		
+		foreach($this->archives as $mid=>$val) {
+			$this->used_metas[] = $mid;
 		}
 
 		$this->load->view('meta');

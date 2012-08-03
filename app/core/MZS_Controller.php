@@ -13,7 +13,7 @@ class MZS_Controller extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 
 		if( $this->uri->segment(1) != 'admin') {
 			$this->init_menu();

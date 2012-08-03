@@ -1,8 +1,7 @@
 <?php $this->load->view('admin/header'); ?>
 
-<div class="container">
 	<div class="row">
-		<div class="span7">
+		<div class="span8">
 			<table class="table table-scriped">
 				<thead>
 					<tr>
@@ -14,25 +13,25 @@
 				<tbody>
 					<?php foreach( $this->metas as $meta ) : ?>
 					<tr>
-						<td><a href="<?php echo site_url('admin/meta/category/' . $meta['mid']); ?>"><?php echo $meta['name']; ?></a></td>
+						<td><a href="<?php echo site_url('admin/category/' . $meta['mid']); ?>"><?php echo $meta['name']; ?></a></td>
 						<td><?php echo $meta['slug']; ?></td>
-						<td><a href="<?php echo site_url('admin/post/' . $meta['mid']); ?>"><?php echo $meta['count']; ?></a></td>
+						<td><?php echo $meta['count']; ?></td>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>
 		<div class="span4">
-			<?php echo form_open('admin/meta/publish', array('class'=>'well'), $this->hidden); ?>
+				<label for="meta_name">分类名称</label>
+				<input type="text" name="meta_name" id="meta_name" value="<?php echo $this->meta_name; ?>" />
 
-			<?php echo form_label('分类名称', 'meta_name'); ?>
-			<?php echo form_input(array('name'=>'meta_name', 'id'=>'meta_name', 'value'=>$this->meta_name)); ?>
-
-			<?php echo form_submit(array('class'=>'btn btn-primary'), $this->button_name); ?>
-
-			<?php echo form_close(); ?>
+				<label for="meta_slug">分类缩略名</label>
+				<input type="text" name="meta_slug" id="meta_slug" value="<?php echo $this->meta_slug; ?>" />
+				<hr />
+				
+				<button class="btn btn-primary" type="submit"><?php echo $this->mid != 0 ? 'Update' : 'Publish'; ?></button>
+			</form>
 		</div>
 	</div>
-</div> <!--/container -->
 
 <?php $this->load->view('admin/footer'); ?>

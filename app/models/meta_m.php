@@ -11,8 +11,12 @@ class Meta_m extends CI_Model
 
 	public function fetch_all($type = 'category')
 	{
-		$this->db->order_by('mid');
+		$this->db->order_by('mid', 'desc');
 		$query = $this->db->get_where($this->table, array('type'=>$type));
+
+		if($query->num_rows() == 0) {
+			return false;
+		}
 
 		return $query->result_array();
 	}
@@ -68,9 +72,13 @@ class Meta_m extends CI_Model
 		$this->db->update($this->table);
 	}
 
-	public function edit_meta($name, $type = 'category', $mid)
+	public function edit_meta($name, $slug = '', $type = 'category', $mid)
 	{
-		$slug = $this->meta_slug($name);
+		if(! $slug) {
+			$slug = $name;
+		}
+
+		$slug = $this->meta_slug($slug);
 		
 		if(! $slug) {
 			return null;

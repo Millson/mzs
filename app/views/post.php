@@ -1,7 +1,7 @@
 <?php $this->load->view('header'); ?>
 
 <div class="row">
-	<div class="span12">
+	<div class="span8">
 		<?php echo $this->post['content']; ?>
 		<hr>
 		<div class="pagination">
@@ -20,17 +20,26 @@
 			</ul>
 		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="span12">
+	<div class="span4">
 		<h4>Published</h4>
 		<div class="date"><span><?php echo date("Y年m月d日 H时i分s秒", $this->post['modified']); ?></span></div>
+		<hr />
+		
+		<?php if($this->post['categories']) : ?>
+		<h4>Categories</h4>
+		<ul class="tag_box inline">
+			<?php foreach($this->post['categories'] as $tag) : ?>
+				<li><a href="<?php echo site_url('category') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?><?php echo $tag['count']; ?></span></a></li>
+			<?php endforeach; ?>
+		</ul>
+		<hr />
+		<?php endif; ?>
 
-		<?php if($this->tags) : ?>
+		<?php if($this->post['tags']) : ?>
 		<h4>Tags</h4>
-		<ul class="tag_box">
-			<?php foreach($this->tags as $tag) : ?>
-				<li><a href="#"><?php echo $tag['name']; ?></a></li>
+		<ul class="tag_box inline">
+			<?php foreach($this->post['tags'] as $tag) : ?>
+				<li><a href="<?php echo site_url('tag') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?><span><?php echo $tag['count']; ?></span></a></li>
 			<?php endforeach; ?>
 		</ul>
 		<?php endif; ?>
