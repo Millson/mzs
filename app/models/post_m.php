@@ -9,13 +9,13 @@ class Post_m extends CI_Model
 		parent::__construct();
 	}
 
-	public function fetch($type = 'post', $limit = 0, $page = 0)
+	public function fetch($type = 'post', $limit = 0, $offset = 0)
 	{
 		$this->db->where($this->table.'.type', $type);
 		$this->db->order_by($this->table.'.pid', 'desc');
 
-		if( $limit != 0 ){
-			$this->db->limit($limit, $page);
+		if($limit != 0) {
+			$this->db->limit($limit, $offset);
 		}
 
 		$query = $this->db->get($this->table);
@@ -23,7 +23,7 @@ class Post_m extends CI_Model
 		$result = $query->result_array();
 		
 		if( ! $result ) {
-			die('404');
+			show_404();
 		}
 
 		foreach($result as &$value) {
@@ -31,6 +31,13 @@ class Post_m extends CI_Model
 		}
 
 		return $result;
+	}
+
+	public function get_total($type = 'post')
+	{
+		$query = $this->db->get_where($this->table, array('type'=>$type));
+
+		return $query->num_rows();
 	}
 	
 	public function fetch_by_mid($mid)
@@ -125,14 +132,15 @@ class Post_m extends CI_Model
 		$post['date'] = date("Y/m/d H:i:s", $post['created']);
 	}
 
-	public function publish()
+	public function publish($type = 'post')
 	{
+		$this->load->library('util');
+
 		if( $this->input->post('pid') ) {
 			$pid = $this->input->post('pid');
-			
-			$this->update_post($pid);
+			$this->update_post($pid, $type);
 		}else{
-			$pid = $this->new_post();
+			$pid = $this->new_post($type);
 		}
 
 		//处理分类
@@ -146,42 +154,61 @@ class Post_m extends CI_Model
 		$this->set_meta($pid, $this->input->post('tags'), 'tag');
 	}
 
-	public function del_post($pid)
+	public function del($pid)
 	{
 		$this->db->where('pid', $pid);
-		$this->db->delete( array($this->table, 'comment', 'relation') );
+		$this->db->delete($this->table);
 
 		$this->set_meta($pid, null);
 		$this->set_meta($pid, null, 'tag');
 	}
 
-	private function new_post()
+	private function new_post($type)
 	{
 		$data = array(
 			'title'		=> $this->input->post('title'),
 			'content'	=> $this->input->post('content'),
-			'slug'		=> $this->input->post('slug'),
+			'slug'		=> $this->util->make_slug( $this->input->post('slug') ),
 			'created'	=> time(),
 			'modified'	=> time(),
-			'type'		=> 'post',
+			'type'		=> $type,
 			'views'		=> 0,
 			'comments'	=> 0
 		);
 
+		if(! $data['title']) {
+			$data['title'] = '未命名文档';
+		}
+
 		$this->db->insert($this->table, $data);
 
-		return $this->db->insert_id();
+		$pid = $this->db->insert_id();
+
+		if(! $data['slug']) {
+			$this->db->where('pid', $pid);
+			$this->db->update($this->table, array('slug'=>$pid));
+		}
+
+		return $pid;
 	}
 
-	private function update_post($pid)
+	private function update_post($pid, $type)
 	{
 		$data = array(
 			'title'		=> $this->input->post('title'),
 			'content'	=> $this->input->post('content'),
-			'slug'		=> $this->input->post('slug'),
+			'slug'		=> $this->util->make_slug( $this->input->post('slug') ),
 			'modified'	=> time(),
-			'type'		=> $this->input->post('type')
+			'type'		=> $type
 		);
+
+		if(! $data['title']) {
+			$data['title'] = '未命名文档';
+		}
+
+		if(! $data['slug']) {
+			$data['slug'] = $pid;
+		}
 
 		$this->db->where('pid', $pid);
 		$this->db->update($this->table, $data);

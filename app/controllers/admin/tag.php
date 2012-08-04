@@ -54,6 +54,53 @@ class Tag extends MZS_Controller
 			redirect('admin/tag');
 		}
 	}
+
+	public function del()
+	{
+		if(! $this->input->is_ajax_request()) {
+			show_404();
+		}
+
+		$tags = $this->input->post('tags');
+		$tags = explode(",", $tags);
+
+		$deleted = array();
+
+		foreach($tags as $mid) {
+			$result = $this->meta_m->del($mid, 'tag');
+
+			if($result) {
+				$deleted[] = $mid;
+			}
+		}
+
+		echo json_encode($deleted);
+	}
+
+	public function merge()
+	{
+		if(! $this->input->is_ajax_request()) {
+			show_404();
+		}
+
+		$to_tag = $this->input->post('to_tag');
+		
+		$to_mid = $this->meta_m->insert_tags($to_tag);
+		
+		$tags = $this->input->post('tags');
+		$tags = explode(",", $tags);
+
+		$deleted = array();
+
+		foreach($tags as $mid) {
+			$this->relation_m->merge($mid, $to_mid);
+			$this->meta_m->del($mid, 'tag');
+
+			$deleted[] = $mid;
+		}
+
+		echo json_encode($deleted);
+	}
 }
 
 /* End of file tag.php */

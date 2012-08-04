@@ -1,6 +1,6 @@
 <?php $this->load->view('admin/header'); ?>
 
-<form action="<?php echo site_url('admin/page/publish'); ?>">
+<form action="<?php echo site_url('admin/page/publish'); ?>" method="post">
 	<div class="row">
 		<div class="span8">
 			<label for="title">页面标题</label>
@@ -15,6 +15,8 @@
 			<input type="text" name="slug" id="slug" placeholder="输入缩略名" value="<?php echo $this->slug; ?>" style="width:100%;" />
 			<hr />
 
+			<input type="hidden" name="pid" value="<?php echo $this->pid; ?>" />
+			
 			<button class="btn btn-primary" type="submit"><?php echo $this->pid != 0 ? 'Update' : 'Publish'; ?></button>
 		</div>
 	</div>

@@ -11,7 +11,8 @@ class Meta_m extends CI_Model
 
 	public function fetch_all($type = 'category')
 	{
-		$this->db->order_by('mid', 'desc');
+		$this->db->order_by('order', 'asc');
+		$this->db->order_by('count', 'asc');
 		$query = $this->db->get_where($this->table, array('type'=>$type));
 
 		if($query->num_rows() == 0) {
@@ -72,14 +73,16 @@ class Meta_m extends CI_Model
 		$this->db->update($this->table);
 	}
 
-	public function edit_meta($name, $slug = '', $type = 'category', $mid)
+	public function edit_meta($name, $slug = '', $type = 'category', $mid = 0)
 	{
 		if(! $slug) {
 			$slug = $name;
 		}
 
-		$slug = $this->meta_slug($slug);
-		
+		$this->load->library('util');
+
+		$slug = $this->util->make_slug($slug);
+
 		if(! $slug) {
 			return null;
 		}
@@ -106,12 +109,38 @@ class Meta_m extends CI_Model
 			'name'		=> $name,
 			'type'		=> $type,
 			'count'		=> 0,
-			'order'		=> 0
+			'order'		=> count($this->fetch_all($type)) + 1
 		);
 
 		$this->db->insert($this->table, $data);
 
 		return $this->db->insert_id();
+	}
+
+	public function del($mid, $type = 'category')
+	{
+		if( $this->relation_m->exist_meta($mid) ) {
+			return false;
+		}
+
+		$curr_meta = $this->fetch_by_mid($mid, $type);
+
+		if(! $curr_meta || $curr_meta['count'] > 0) {
+			return false;
+		}
+
+		$this->db->delete($this->table, array('mid'=>$mid));
+
+		if($type == 'tag') {
+			return true;
+		}
+
+		$this->db->set('order', '`order` - 1', false);
+		$this->db->where('order >', $curr_meta['order']);
+		$this->db->where('type', $type);
+		$this->db->update($this->table);
+
+		return true;
 	}
 
 	public function insert_tags($input_tags)
@@ -129,8 +158,8 @@ class Meta_m extends CI_Model
 			if ($row) {
 				$result[] = $row['mid'];
 			} else {
-				$mid = $this->edit_meta($tag, 'tag');
-				
+				$mid = $this->edit_meta($tag, '', 'tag');
+
 				if($mid) {
 					$result[] = $mid;
 				}
@@ -140,14 +169,40 @@ class Meta_m extends CI_Model
 		return is_array($input_tags) ? $result : current($result);
 	}
 
+	public function change_order($mid, $way, $type = 'category')
+	{
+		$curr_meta = $this->fetch_by_mid($mid, $type);
+
+		if(! $curr_meta) {
+			show_404();
+		}
+
+		$from_order = $curr_meta['order'];
+
+		if($way == 'up') {
+			$to_order = $from_order - 1;
+		}else{
+			$to_order = $from_order + 1;
+		}
+
+		$this->db->set('order', $from_order);
+		$this->db->where('order', $to_order);
+		$this->db->update($this->table);
+
+		$this->db->set('order', $to_order);
+		$this->db->where('mid', $mid);
+		$this->db->update($this->table);
+
+	}
+
 	private function meta_slug($str, $default = null, $max_length = 200)
 	{
 		$str = str_replace(array("'", ":", "\\", "/", '"'), "", $str);
-        $str = str_replace(array("+", ",", ' ', '，', ' ', ".", "?", "=", "&", "!", "<", ">", "(", ")", "[", "]", "{", "}"), "-", $str);
-        $str = trim($str, '-');
-        $str = empty($str) ? $default : $str;
+		$str = str_replace(array("+", ",", ' ', '，', ' ', ".", "?", "=", "&", "!", "<", ">", "(", ")", "[", "]", "{", "}"), "-", $str);
+		$str = trim($str, '-');
+		$str = empty($str) ? $default : $str;
 
-        return function_exists('mb_get_info') ? mb_strimwidth($str, 0, 128, '', $this->config->item("charset")) : substr($str, 0, $max_length);
+		return function_exists('mb_get_info') ? mb_strimwidth($str, 0, 128, '', $this->config->item("charset")) : substr($str, 0, $max_length);
 	}
 }
 

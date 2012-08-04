@@ -48,6 +48,8 @@ $route['category'] = 'meta/index/category';
 $route['tag'] = 'meta/index/tag';
 
 //backend
+$route['admin/post/(:num)'] = 'admin/post/index/$1';
+$route['admin/page/(:num)'] = 'admin/page/index/$1';
 $route['admin/category/(:num)'] = 'admin/category/index/$1';
 $route['admin/tag/(:num)'] = 'admin/tag/index/$1';
 

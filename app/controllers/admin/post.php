@@ -2,16 +2,19 @@
 
 class Post extends MZS_Controller {
 
-	public $pid;
 	public $type = 'post';
+	
 	public $categories;
 	public $posts;
-	public $hidden;
 	public $post;
+	public $pagination_links;
 
+	public $pid;
 	public $select_mids = array();
 	public $tags = '';
 	public $slug = '';
+
+	private $per_page = 10;
 
 	public function __construct()
 	{
@@ -24,7 +27,17 @@ class Post extends MZS_Controller {
 
 		$this->page_name = $this->page_header = '日志列表';
 
-		$this->posts = $this->post_m->fetch($this->type, 0, $page);
+		$this->posts = $this->post_m->fetch($this->type, $this->per_page, $page);
+
+		$this->load->library('pagination');
+
+		$config['base_url'] = site_url('admin/post');
+		$config['total_rows'] = $this->post_m->get_total($this->type);
+		$config['per_page'] = $this->per_page;
+
+		$this->pagination->initialize($config);
+
+		$this->pagination_links = $this->pagination->create_links();
 
 		$this->load->view('admin/post');
 	}
@@ -41,7 +54,6 @@ class Post extends MZS_Controller {
 			$this->categories[ $category['mid'] ] = $category['name'];
 		}
 
-		$this->hidden['type'] = $this->type;
 		$this->category_select = array();
 
 		if($pid != 0) {
@@ -53,7 +65,6 @@ class Post extends MZS_Controller {
 				show_404();
 			}
 
-			$this->hidden['pid'] = $pid;
 			$this->page_name = '编辑日志';
 
 			if($this->post['categories']) {
@@ -80,16 +91,22 @@ class Post extends MZS_Controller {
 
 	public function publish()
 	{
-		//TODO 提交文章
-
 		$this->post_m->publish();
 
 		redirect('admin/post');
 	}
 
-	public function del()
+	public function del($pid = 0)
 	{
-		//TODO 删除文章
+		$pid = intval($pid);
+
+		if($pid == 0) {
+			show_404();
+		}
+
+		$this->post_m->del($pid);
+
+		redirect('admin/post');
 	}
 }
 

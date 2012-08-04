@@ -9,6 +9,28 @@ class Relation_m extends CI_Model
 		parent::__construct();
 	}
 
+	public function exist_meta($mid)
+	{
+		$query = $this->db->get_where($this->table, array('mid'=>$mid));
+
+		if($query->num_rows() == 0) {
+			return false;
+		}
+
+		return $query->result_array();
+	}
+
+	public function exist_pid($pid)
+	{
+		$query = $this->db->get_where($this->table, array('pid'=>$pid));
+
+		if($query->num_rows() == 0) {
+			return false;
+		}
+
+		return $query->result_array();
+	}
+
 	public function exist($pid, $mid)
 	{
 		$query = $this->db->get_where($this->table, array('pid'=>$pid, 'mid'=>$mid));
@@ -17,7 +39,7 @@ class Relation_m extends CI_Model
 			return false;
 		}
 
-		return true;
+		return $query->result_row();
 	}
 
 	public function add($pid, $mid)
@@ -28,6 +50,16 @@ class Relation_m extends CI_Model
 	public function del($pid, $mid)
 	{
 		$this->db->delete($this->table, array('pid'=>$pid, 'mid'=>$mid));
+	}
+
+	public function merge($from, $to)
+	{
+		$relation = $this->exist_meta($from);
+
+		foreach($relation as $r) {
+			$this->db->set('mid', $to);
+			$this->db->update($this->table, array('mid'=>$r['mid'], 'pid'=>$r['pid']));
+		}
 	}
 }
 

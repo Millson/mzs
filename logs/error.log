@@ -101,3 +101,16 @@
 [Thu Aug 02 01:50:03 2012] [error] [client 192.168.0.117] PHP Fatal error:  Cannot access empty property in /var/www/mzs/app/core/MZS_Controller.php on line 25, referer: http://mzs.com/category
 [Fri Aug 03 21:48:14 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting ')' in /home/www/mzs/app/controllers/admin/category.php on line 57
 [Fri Aug 03 22:44:21 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected '<' in /home/www/mzs/app/views/admin/post_edit.php on line 17, referer: http://mzs.com/admin/post
+[Sat Aug 04 08:23:05 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to a member function item() on a non-object in /home/www/mzs/app/libraries/Util.php on line 12, referer: http://mzs.com/admin/post/edit/190
+[Sat Aug 04 08:23:30 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to a member function item() on a non-object in /home/www/mzs/app/libraries/util.php on line 12, referer: http://mzs.com/admin/post/edit/190
+[Sat Aug 04 09:53:33 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function show_403() in /home/www/mzs/app/controllers/admin/post.php on line 91
+[Sat Aug 04 09:54:05 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function show_403() in /home/www/mzs/app/controllers/admin/post.php on line 91
+[Sat Aug 04 09:54:13 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function show_403() in /home/www/mzs/app/controllers/admin/post.php on line 91
+[Sat Aug 04 10:03:48 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_DB_mysql_driver::get_total() in /home/www/mzs/app/controllers/admin/post.php on line 33
+[Sat Aug 04 20:56:00 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected ';' in /home/www/mzs/app/views/admin/category.php on line 21, referer: http://mzs.com/admin/category
+[Sat Aug 04 20:56:44 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_ENDFOREACH in /home/www/mzs/app/views/admin/category.php on line 25, referer: http://mzs.com/admin/category
+[Sat Aug 04 21:22:34 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_DB_mysql_driver::fetch_by_mid() in /home/www/mzs/app/models/meta_m.php on line 125, referer: http://mzs.com/admin/category/194
+[Sat Aug 04 22:15:15 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected $end in /home/www/mzs/app/views/admin/tag.php on line 52, referer: http://mzs.com/admin/category
+[Sat Aug 04 22:51:32 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home/www/mzs/app/core/MZS_Controller.php on line 12
+[Sat Aug 04 23:36:11 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_Input::enable_profiler() in /home/www/mzs/app/controllers/admin/tag.php on line 64, referer: http://mzs.com/admin/tag
+[Sun Aug 05 00:30:43 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_OBJECT_OPERATOR in /home/www/mzs/app/controllers/admin/tag.php on line 82, referer: http://mzs.com/admin/tag

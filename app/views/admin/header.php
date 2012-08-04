@@ -16,6 +16,9 @@
 		<link href="<?php echo base_url('assets/css/bootstrap-responsive.css'); ?>" rel="stylesheet" />
 		<link href="<?php echo base_url('assets/css/style.css'); ?>" rel="stylesheet" type="text/css" media="all" />
 
+		<script src="<?php echo base_url('assets/js/jquery.js'); ?>"></script>
+		<script src="<?php echo base_url('assets/js/bootstrap.js'); ?>"></script>
+		
 		<!-- Le fav and touch icons -->
 		<!-- Update these with your own images
 		<link rel="shortcut icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>">
@@ -34,7 +37,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="<?php echo site_url(); ?>">三水志</a>
+					<a class="brand" href="<?php echo site_url('admin'); ?>">MZSAdmin</a>
 					<div class="nav-collapse">
 						<ul class="nav">
 							<li class="dropdown">
@@ -47,8 +50,8 @@
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">管理<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo site_url('admin/post'); ?>">日志列表</a></li>
-									<li><a href="<?php echo site_url('admin/page'); ?>">页面列表</a></li>
+									<li><a href="<?php echo site_url('admin/post'); ?>">日志</a></li>
+									<li><a href="<?php echo site_url('admin/page'); ?>">页面</a></li>
 									<li><a href="<?php echo site_url('admin/category'); ?>">分类</a></li>
 									<li><a href="<?php echo site_url('admin/tag'); ?>">标签</a></li>
 								</ul>

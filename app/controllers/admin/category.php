@@ -47,6 +47,26 @@ class Category extends MZS_Controller
 		$this->load->view('admin/category.php');
 	}
 
+	public function change_order($mid, $way = 'up')
+	{
+		$this->meta_m->change_order($mid, $way);
+
+		redirect('admin/category');
+	}
+
+	public function del($mid = 0)
+	{
+		$mid = intval($mid);
+
+		if($mid == 0) {
+			show_404();
+		}
+
+		$this->meta_m->del($mid);
+
+		redirect('admin/category');
+	}
+
 	public function publish()
 	{
 		$mid = $this->meta_m->edit_meta($this->input->post('meta_name'), $this->input->post('meta_slug'), 'category', $this->input->post('mid'));
