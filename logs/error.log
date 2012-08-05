@@ -126,3 +126,12 @@
 [Sun Aug 05 17:55:59 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_DB_mysql_driver::oder_by() in /home/www/mzs/app/models/link_m.php on line 13
 [Sun Aug 05 19:06:57 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected $end in /home/www/mzs/app/views/link.php on line 13, referer: http://mzs.com/
 [Sun Aug 05 20:39:37 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_Input::cache() in /home/www/mzs/app/controllers/link.php on line 18, referer: http://mzs.com/
+[Sun Aug 05 22:32:38 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
+[Sun Aug 05 22:32:50 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
+[Sun Aug 05 22:32:52 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
+[Sun Aug 05 22:33:22 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
+[Sun Aug 05 22:33:41 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 22
+[Sun Aug 05 22:33:49 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 22
+[Sun Aug 05 22:34:14 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
+[Sun Aug 05 22:34:24 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
+[Sun Aug 05 22:34:36 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function delete_file() in /home/www/mzs/app/controllers/admin/clean.php on line 21
