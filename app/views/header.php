@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="<?php echo base_url('assets/js/html5.js'); ?>"></script>
 		<![endif]-->
 
 		<!-- Le styles -->
@@ -17,12 +17,13 @@
 		<link href="<?php echo base_url('assets/css/style.css'); ?>" rel="stylesheet" type="text/css" media="all" />
 
 		<!-- Le fav and touch icons -->
-		<!-- Update these with your own images
 		<link rel="shortcut icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>">
 		<link rel="apple-touch-icon" href="<?php echo base_url('assets/img/apple-touch-icon.png'); ?>">
 		<link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url('assets/img/apple-touch-icon-72x72.png'); ?>">
 		<link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url('assets/img/apple-touch-icon-114x114.png'); ?>">
-		-->
+
+		<script src="<?php echo base_url('assets/js/jquery.js'); ?>"></script>
+		<script src="<?php echo base_url('assets/js/bootstrap.js'); ?>"></script>
 	</head>
 
 	<body>
