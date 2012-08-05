@@ -117,13 +117,13 @@ class Meta_m extends CI_Model
 		return $this->db->insert_id();
 	}
 
-	public function del($mid, $type = 'category')
+	public function del_category($mid)
 	{
-		if( $this->relation_m->exist_meta($mid) ) {
+		if( $this->relation_m->fetch_by_mid($mid) ) {
 			return false;
 		}
 
-		$curr_meta = $this->fetch_by_mid($mid, $type);
+		$curr_meta = $this->fetch_by_mid($mid);
 
 		if(! $curr_meta || $curr_meta['count'] > 0) {
 			return false;
@@ -131,16 +131,55 @@ class Meta_m extends CI_Model
 
 		$this->db->delete($this->table, array('mid'=>$mid));
 
-		if($type == 'tag') {
-			return true;
-		}
-
 		$this->db->set('order', '`order` - 1', false);
 		$this->db->where('order >', $curr_meta['order']);
-		$this->db->where('type', $type);
+		$this->db->where('type', 'category');
 		$this->db->update($this->table);
 
 		return true;
+	}
+
+	public function del_tags($mids)
+	{
+		if(! $mids) {
+			return ;
+		}
+
+		if(! is_array($mids)) {
+			$mids = array($mids);
+		}
+
+		$this->db->where_in('mid', $mids);
+		$this->db->delete($this->table);
+
+		$this->relation_m->del_by_mids($mids);
+	}
+
+	public function merge_tag($mids, $to_mid)
+	{
+		if(! $mids) {
+			return ;
+		}
+
+		if(! is_array($mids)) {
+			$mids = array($mids);
+		}
+
+		if(! $to_mid) {
+			return ;
+		}
+
+		foreach($mids as $mid) {
+			$curr_meta = $this->fetch_by_mid($mid, 'tag');
+
+			if(! $curr_meta) {
+				continue;
+			}
+
+			$this->db->delete($this->table, array('mid'=>$mid));
+
+			$this->relation_m->merge($mid, $to_mid);
+		}
 	}
 
 	public function insert_tags($input_tags)

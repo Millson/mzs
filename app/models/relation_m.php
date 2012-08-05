@@ -9,7 +9,7 @@ class Relation_m extends CI_Model
 		parent::__construct();
 	}
 
-	public function exist_meta($mid)
+	public function fetch_by_mid($mid)
 	{
 		$query = $this->db->get_where($this->table, array('mid'=>$mid));
 
@@ -20,7 +20,7 @@ class Relation_m extends CI_Model
 		return $query->result_array();
 	}
 
-	public function exist_pid($pid)
+	public function fetch_by_pid($pid)
 	{
 		$query = $this->db->get_where($this->table, array('pid'=>$pid));
 
@@ -39,7 +39,7 @@ class Relation_m extends CI_Model
 			return false;
 		}
 
-		return $query->result_row();
+		return $query->row_array();
 	}
 
 	public function add($pid, $mid)
@@ -52,13 +52,37 @@ class Relation_m extends CI_Model
 		$this->db->delete($this->table, array('pid'=>$pid, 'mid'=>$mid));
 	}
 
-	public function merge($from, $to)
+	public function del_by_mids($mids)
 	{
-		$relation = $this->exist_meta($from);
+		if(! $mids) {
+			return ;
+		}
+		
+		if(! is_array($mids) ) {
+			$mids = array($mids);
+		}
 
-		foreach($relation as $r) {
-			$this->db->set('mid', $to);
-			$this->db->update($this->table, array('mid'=>$r['mid'], 'pid'=>$r['pid']));
+		$this->db->where_in('mid', $mids);
+		$this->db->delete($this->table);
+	}
+
+	public function merge($mid, $to_mid)
+	{
+		$r = $this->fetch_by_mid($mid);
+
+		if(! $r) {
+			retrun ;
+		}
+
+		foreach($r as $val) {
+			$this->del($val['pid'], $mid);
+			
+			if( $this->exist($val['pid'], $to_mid) ) {
+				continue;
+			}
+
+			$this->add($val['pid'], $to_mid);
+			$this->meta_m->add_count($to_mid, 1);
 		}
 	}
 }

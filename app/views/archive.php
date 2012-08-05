@@ -3,9 +3,9 @@
 <div class="row">
 	<div class="span12">
 	<?php foreach($this->archives as $year=>$year_posts) : ?>
-		<h2><?php echo $year; ?>:</h2>
+		<h3><?php echo $year; ?>:</h3>
 		<?php foreach($year_posts as $month=>$month_posts) : ?>
-		<h3><?php echo $month; ?></h3>
+		<h4><?php echo $month; ?></h4>
 			<ul>
 			<?php foreach($month_posts as $post) : ?>
 				<li>

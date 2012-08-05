@@ -54,6 +54,7 @@
 									<li><a href="<?php echo site_url('admin/page'); ?>">页面</a></li>
 									<li><a href="<?php echo site_url('admin/category'); ?>">分类</a></li>
 									<li><a href="<?php echo site_url('admin/tag'); ?>">标签</a></li>
+									<li><a href="<?php echo site_url('admin/link'); ?>">链接</a></li>
 								</ul>
 							</li>
 							<li></i><a href="<?php echo site_url(); ?>"><i class="icon-plane icon-white"></i>访问前台</a></li>
@@ -63,6 +64,7 @@
 			</div><!--/.navbar-inner -->
 		</div><!--/.navbar -->
 
+<div id="uedit"></div>
 		<div class="container">
 			<div class="content">
 				<div class="page-header">

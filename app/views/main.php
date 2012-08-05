@@ -2,7 +2,6 @@
 
 <div class="row">
 	<div class="span12">
-		<h2>Recent Posts</h2>
 		<ul>
 		<?php foreach($this->posts as $post) : ?>
 			<li>

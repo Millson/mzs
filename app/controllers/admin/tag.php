@@ -20,6 +20,7 @@ class Tag extends MZS_Controller
 		$this->page_name = '标签';
 
 		$this->page_header = $this->page_name;
+		$this->page_tagline = anchor('admin/tag', '创建');
 
 		$mid = intval( $mid );
 
@@ -64,17 +65,9 @@ class Tag extends MZS_Controller
 		$tags = $this->input->post('tags');
 		$tags = explode(",", $tags);
 
-		$deleted = array();
+		$result = $this->meta_m->del_tags($tags);
 
-		foreach($tags as $mid) {
-			$result = $this->meta_m->del($mid, 'tag');
-
-			if($result) {
-				$deleted[] = $mid;
-			}
-		}
-
-		echo json_encode($deleted);
+		echo json_encode($tags);
 	}
 
 	public function merge()
@@ -90,16 +83,9 @@ class Tag extends MZS_Controller
 		$tags = $this->input->post('tags');
 		$tags = explode(",", $tags);
 
-		$deleted = array();
+		$this->meta_m->merge_tag($tags, $to_mid);
 
-		foreach($tags as $mid) {
-			$this->relation_m->merge($mid, $to_mid);
-			$this->meta_m->del($mid, 'tag');
-
-			$deleted[] = $mid;
-		}
-
-		echo json_encode($deleted);
+		echo json_encode($tags);
 	}
 }
 

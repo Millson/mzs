@@ -23,23 +23,23 @@
 	<div class="span4">
 		<h4>Published</h4>
 		<div class="date"><span><?php echo date("Y年m月d日 H时i分s秒", $this->post['modified']); ?></span></div>
-		<hr />
 		
 		<?php if($this->post['categories']) : ?>
+		<hr />
 		<h4>Categories</h4>
 		<ul class="tag_box inline">
 			<?php foreach($this->post['categories'] as $tag) : ?>
-				<li><a href="<?php echo site_url('category') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?><?php echo $tag['count']; ?></span></a></li>
+				<li><a href="<?php echo site_url('category') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
-		<hr />
 		<?php endif; ?>
 
 		<?php if($this->post['tags']) : ?>
+		<hr />
 		<h4>Tags</h4>
 		<ul class="tag_box inline">
 			<?php foreach($this->post['tags'] as $tag) : ?>
-				<li><a href="<?php echo site_url('tag') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?><span><?php echo $tag['count']; ?></span></a></li>
+				<li><a href="<?php echo site_url('tag') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 		<?php endif; ?>

@@ -16,8 +16,7 @@ class Main extends MZS_Controller
 		}
 
 		$this->page_name = '首页';
-		$this->page_header = 'Hello World';
-		$this->page_tagline = 'The more you want to get, the more you would be lost!';
+		$this->page_header = 'Recent Posts';
 
 		$posts = $this->post_m->fetch('post', 10);
 

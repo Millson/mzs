@@ -30,10 +30,17 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#del_tags").click(function(){
+		var tags = selected_tags();
+
+		if(tags == '') {
+			alert('未选中任一标签');
+			return ;
+		}
+
 		$.ajax({
 			'type': 'POST',
 			'url': '/admin/tag/del',
-			'data': {'tags': selected_tags()},
+			'data': {'tags': tags},
 			'datatype': 'json',
 			'success': function(result){
 				alert('ok');
@@ -55,13 +62,19 @@ $(document).ready(function(){
 			return ;
 		}
 
+		var tags = selected_tags();
+
+		if(tags == '') {
+			alert('未选中任一标签');
+			return ;
+		}
+
 		$.ajax({
 			'type': 'POST',
 			'url': '/admin/tag/merge',
-			'data': {'tags': selected_tags(), 'to_tag': to_tag},
+			'data': {'tags': tags, 'to_tag': to_tag},
 			'datatype': 'json',
 			'success': function(result){
-				alert(result);return ;
 				alert('ok');
 
 				result = eval("(" + result + ")");
@@ -69,7 +82,6 @@ $(document).ready(function(){
 				$.each(result, function(idx, item) {
 					$("#tag_"+item).remove();
 				});
-
 			}
 		});
 	});

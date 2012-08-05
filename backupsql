@@ -1,0 +1,4 @@
+insert into mzs_meta(mid,name,slug,type,count,`order`) select mid,name,slug,type,count,`order` from typecho_metas;
+insert into mzs_post(pid,title,slug,content,created,modified,type,comments) select cid,title,slug,text,created,modified,type,commentsNum from typecho_contents where type='post' or type='page';
+insert into mzs_relation(pid,mid) select cid,mid from typecho_relationships;
+

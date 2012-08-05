@@ -7,7 +7,9 @@
 			<input type="text" name="title" id="title" class="input-xxlarge" placeholder="输入标题" style="width:100%" value="<?php echo $this->post ? $this->post['title'] : ''; ?>" />
 
 			<label for="content">日志内容</label>
-			<textarea name="content" id="content" class="input-xxlarge" style="width:100%;height:350px;"><?php echo $this->post ? $this->post['content'] : ''; ?></textarea>
+			<textarea name="content" id="content" class="input-xxlarge" style="width:100%;height:350px;">
+				<?php echo $this->post ? $this->post['content'] : ''; ?>
+			</textarea>
 		</div>
 
 		<div class="span4">

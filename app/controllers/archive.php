@@ -26,7 +26,7 @@ class Archive extends MZS_Controller
 
 		foreach($posts as $post) {
 			$year = date('Y', $post['created']);
-			$month = date('F', $post['created']);
+			$month = date('m月', $post['created']);
 
 			$post['permalink'] = site_url('post/' . $post['slug']);
 

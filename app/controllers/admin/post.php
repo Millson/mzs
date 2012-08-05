@@ -26,6 +26,7 @@ class Post extends MZS_Controller {
 		$page = intval($page);
 
 		$this->page_name = $this->page_header = '日志列表';
+		$this->page_tagline = anchor('admin/post/edit', '创建');
 
 		$this->posts = $this->post_m->fetch($this->type, $this->per_page, $page);
 

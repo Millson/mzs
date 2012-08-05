@@ -17,15 +17,20 @@ class MZS_Controller extends CI_Controller {
 
 		if( $this->uri->segment(1) != 'admin') {
 			$this->init_menu();
+		}else{
+			if($this->session->userdata('username') != 'Millson') {
+				show_404();
+			}
 		}
 	}
 
 	private function init_menu()
 	{
 		$this->permanent_pages = array(
+			array('slug'=>'archive', 'title'=>'归档'),
 			array('slug'=>'category', 'title'=>'分类'),
 			array('slug'=>'tag', 'title'=>'标签'),
-			array('slug'=>'archive', 'title'=>'归档'),
+			array('slug'=>'link', 'title'=>'链接'),
 		);
 
 		$this->load->model('post_m');

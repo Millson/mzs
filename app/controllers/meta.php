@@ -22,10 +22,8 @@ class Meta extends MZS_Controller
 		$metas = $this->meta_m->fetch_all($type);
 
 		if($type == 'tag') {
-			$type = 'tags';
 			$this->page_name = $this->page_header = '标签';
 		}else{
-			$type = 'categories';
 			$this->page_name = $this->page_header = '分类';
 		}
 
@@ -34,8 +32,14 @@ class Meta extends MZS_Controller
 		foreach($posts as $post) {
 			$post['permalink'] = site_url('post/'.$post['slug']);
 
-			if($post[ $type ]) {
-				foreach($post[ $type ] as $meta) {
+			if($type == 'tag') {
+				$all = $post['tags'];
+			}else{
+				$all = $post['categories'];
+			}
+
+			if($all) {
+				foreach($all as $meta) {
 					$this->archives[ $meta['mid'] ][] = $post;
 				}
 			}
@@ -49,7 +53,7 @@ class Meta extends MZS_Controller
 			$this->used_metas[] = $mid;
 		}
 
-		$this->load->view('meta');
+		$this->load->view($type);
 	}
 }
 

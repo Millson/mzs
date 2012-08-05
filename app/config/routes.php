@@ -52,6 +52,7 @@ $route['admin/post/(:num)'] = 'admin/post/index/$1';
 $route['admin/page/(:num)'] = 'admin/page/index/$1';
 $route['admin/category/(:num)'] = 'admin/category/index/$1';
 $route['admin/tag/(:num)'] = 'admin/tag/index/$1';
+$route['admin/link/(:num)'] = 'admin/link/index/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

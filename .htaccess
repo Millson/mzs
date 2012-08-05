@@ -10,7 +10,7 @@ RewriteCond %{HTTP_HOST} ^(www\.mzs\.com)(:80)? [NC]
 RewriteRule ^(.*) http://mzs.com/$1 [R=301,L]
 
 # move index.php
-RewriteCond $1 !^(index\.php|assets|guide|bootstrap|robots\.txt)
+RewriteCond $1 !^(index\.php|ueditor|assets|guide|bootstrap|robots\.txt)
 RewriteRule ^(.*)$ /index.php/$1 [L]
 
 # redirect old post link

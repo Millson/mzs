@@ -22,6 +22,7 @@ class Page extends MZS_Controller {
 		$page = intval($page);
 
 		$this->page_name = $this->page_header = '页面列表';
+		$this->page_tagline = anchor('admin/page/edit', '创建');
 
 		$this->posts = $this->post_m->fetch($this->type, $this->per_page, $page);
 

@@ -20,6 +20,7 @@ class Category extends MZS_Controller
 		$this->page_name = '分类';
 
 		$this->page_header = $this->page_name;
+		$this->page_tagline = anchor('admin/category', '创建');
 
 		$mid = intval( $mid );
 
@@ -62,7 +63,7 @@ class Category extends MZS_Controller
 			show_404();
 		}
 
-		$this->meta_m->del($mid);
+		$this->meta_m->del_category($mid);
 
 		redirect('admin/category');
 	}
