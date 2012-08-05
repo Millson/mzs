@@ -12,7 +12,7 @@ class Archive extends MZS_Controller
 	public function index()
 	{
 		if( $this->uri->segment(2) ) {
-			die('404');
+			show_404();
 		}
 
 		$this->page_name = '归档';
@@ -21,8 +21,10 @@ class Archive extends MZS_Controller
 		$posts = $this->post_m->fetch();
 
 		if(! $posts) {
-			die('404');
+			show_404();
 		}
+
+		//$this->input->cache(60);
 
 		foreach($posts as $post) {
 			$year = date('Y', $post['created']);

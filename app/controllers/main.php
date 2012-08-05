@@ -12,9 +12,11 @@ class Main extends MZS_Controller
 	public function index()
 	{
 		if( $this->uri->segment(1) ) {
-			die('404');
+			show_404();
 		}
 
+	//	$this->input->cache(60);
+		
 		$this->page_name = '首页';
 		$this->page_header = 'Recent Posts';
 

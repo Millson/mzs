@@ -14,9 +14,11 @@ class Meta extends MZS_Controller
 	public function index()
 	{
 		if( $this->uri->segment(2) ) {
-			die('404');
+			show_404();
 		}
 
+	//	$this->input->cache(60);
+		
 		$type = $this->uri->segment(1);
 
 		$metas = $this->meta_m->fetch_all($type);
