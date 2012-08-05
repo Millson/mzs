@@ -6980,3 +6980,6 @@
 127.0.0.1 - - [05/Aug/2012:20:19:54 +0800] "GET /page/flashplayer-download-directly HTTP/1.1" 200 1678 "http://mzs.com/link" "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 127.0.0.1 - - [05/Aug/2012:20:19:55 +0800] "GET /page/About-Me HTTP/1.1" 200 1828 "http://mzs.com/page/flashplayer-download-directly" "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 127.0.0.1 - - [05/Aug/2012:20:19:57 +0800] "GET / HTTP/1.1" 200 1981 "http://mzs.com/page/About-Me" "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1"
+127.0.0.1 - - [05/Aug/2012:20:39:34 +0800] "GET / HTTP/1.1" 200 2443 "http://mzs.com/" "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1"
+127.0.0.1 - - [05/Aug/2012:20:39:34 +0800] "GET /assets/css/bootstrap.css HTTP/1.1" 304 211 "http://mzs.com/" "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1"
+127.0.0.1 - - [05/Aug/2012:20:39:37 +0800] "GET /link HTTP/1.1" 500 275 "http://mzs.com/" "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1"

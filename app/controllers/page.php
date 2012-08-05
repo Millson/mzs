@@ -27,7 +27,7 @@ class Page extends MZS_Controller
 			show_404();
 		}
 
-		$this->input->cache(60 * 24);
+		$this->output->cache(60 * 24);
 		
 		$this->page_name = $this->page_header = $this->page['title'];
 

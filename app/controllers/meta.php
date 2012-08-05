@@ -17,7 +17,7 @@ class Meta extends MZS_Controller
 			show_404();
 		}
 
-	//	$this->input->cache(60);
+		$this->output->cache(60);
 		
 		$type = $this->uri->segment(1);
 

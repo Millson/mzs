@@ -24,7 +24,7 @@ class Archive extends MZS_Controller
 			show_404();
 		}
 
-		//$this->input->cache(60);
+		$this->output->cache(60);
 
 		foreach($posts as $post) {
 			$year = date('Y', $post['created']);

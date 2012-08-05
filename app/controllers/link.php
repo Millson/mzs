@@ -15,7 +15,7 @@ class Link extends MZS_Controller
 			show_404();
 		}
 
-		$this->input->cache(60 * 24);
+		$this->output->cache(60 * 24);
 		
 		$this->page_name = '链接';
 		$this->page_header = '链接';

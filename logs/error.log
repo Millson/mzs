@@ -125,3 +125,4 @@
 [Sun Aug 05 17:55:32 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_DB_mysql_driver::oder_by() in /home/www/mzs/app/models/link_m.php on line 13
 [Sun Aug 05 17:55:59 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_DB_mysql_driver::oder_by() in /home/www/mzs/app/models/link_m.php on line 13
 [Sun Aug 05 19:06:57 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected $end in /home/www/mzs/app/views/link.php on line 13, referer: http://mzs.com/
+[Sun Aug 05 20:39:37 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method CI_Input::cache() in /home/www/mzs/app/controllers/link.php on line 18, referer: http://mzs.com/

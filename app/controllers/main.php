@@ -15,7 +15,7 @@ class Main extends MZS_Controller
 			show_404();
 		}
 
-	//	$this->input->cache(60);
+		$this->output->cache(60);
 		
 		$this->page_name = '首页';
 		$this->page_header = 'Recent Posts';
