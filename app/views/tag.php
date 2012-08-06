@@ -4,7 +4,7 @@
 	<div class="span12">
 		<ul class="tag_box inline">
 		<?php foreach($this->used_metas as $mid) : ?>
-			<li><a href="<?php echo current_url() . "#" . $this->all_metas[$mid]['slug']; ?>"><?php echo $this->all_metas[$mid]['name']; ?></a></li>
+			<li><?php echo anchor('tag#'.$this->all_metas[$mid]['slug'], $this->all_metas[$mid]['name']); ?></li>
 		<?php endforeach; ?>
 		</ul>
 	<?php foreach($this->archives as $mid=>$posts) : ?>

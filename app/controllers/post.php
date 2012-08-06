@@ -6,6 +6,8 @@ class Post extends MZS_Controller
 	public $prev;
 	public $next;
 
+	public $related_posts = array();
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -37,6 +39,16 @@ class Post extends MZS_Controller
 
 		$this->prev = $this->post_m->fetch_neighbor($this->post['pid'], 'prev');
 		$this->next = $this->post_m->fetch_neighbor($this->post['pid'], 'next');
+
+		if($this->post['tags']) {
+			$tags = array();
+
+			foreach($this->post['tags'] as $tag) {
+				$tags[] = $tag['mid'];
+			}
+
+			$this->related_posts = $this->post_m->fetch_related($this->post['pid'], $tags);
+		}
 
 		$this->load->view('post');
 	}

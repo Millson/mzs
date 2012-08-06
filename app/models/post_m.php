@@ -23,7 +23,7 @@ class Post_m extends CI_Model
 		$result = $query->result_array();
 		
 		if( ! $result ) {
-			show_404();
+			return false;
 		}
 
 		foreach($result as &$value) {
@@ -50,7 +50,7 @@ class Post_m extends CI_Model
 		$query = $this->db->get($this->table);
 
 		if( $query->num_rows() == 0 ) {
-			die('404');
+			return false;
 		}
 
 		$result = $query->result_array();
@@ -79,6 +79,25 @@ class Post_m extends CI_Model
 		$this->filter( $result );
 
 		return $result;
+	}
+
+	public function fetch_related($pid, $tags)
+	{
+		$posts = array();
+
+		foreach($tags as $mid) {
+			$result = $this->fetch_by_mid($mid);
+
+			if($result) {
+				foreach($result as $r) {
+					if($r['pid'] != $pid) {
+						$posts[ $r['pid'] ] = $r;
+					}
+				}
+			}
+		}
+
+		return $posts;
 	}
 
 	public function fetch_neighbor($pid, $type = 'prev')
@@ -127,6 +146,7 @@ class Post_m extends CI_Model
 		if($post['type'] == 'post') {
 			$post['categories'] = $this->meta_m->fetch_by_pid($post['pid'], 'category');
 			$post['tags'] = $this->meta_m->fetch_by_pid($post['pid'], 'tag');
+			$post['permalink'] = site_url('post/' .$post['slug']);
 		}
 
 		$post['date'] = date("Y/m/d H:i:s", $post['created']);

@@ -11,7 +11,7 @@
 				<?php else : ?>
 				<li class="prev disabled"><a>&larr; 上一篇</a></li>
 				<?php endif; ?>
-				<li><a href="<?php echo site_url('archive'); ?>">归档</a></li>
+				<li><?php echo anchor('archive', '归档'); ?></li>
 				<?php if($this->next) : ?>
 				<li class="next"><?php echo anchor('post/' . $this->next['slug'], '下一篇 &rarr;', array('title'=>$this->next['title'])); ?></li>
 				<?php else : ?>
@@ -29,7 +29,7 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline">
 			<?php foreach($this->post['categories'] as $tag) : ?>
-				<li><a href="<?php echo site_url('category') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?></a></li>
+				<li><?php echo anchor('category#'.$tag['slug'], $tag['name']); ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 		<?php endif; ?>
@@ -39,7 +39,17 @@
 		<h4>Tags</h4>
 		<ul class="tag_box inline">
 			<?php foreach($this->post['tags'] as $tag) : ?>
-				<li><a href="<?php echo site_url('tag') . "#" . $tag['slug']; ?>"><?php echo $tag['name']; ?></a></li>
+				<li><?php echo anchor('tag#'.$tag['slug'], $tag['name']); ?></li>
+			<?php endforeach; ?>
+		</ul>
+		<?php endif; ?>
+
+		<?php if($this->related_posts) : ?>
+		<hr />
+		<h4>Related</h4>
+		<ul>
+			<?php foreach($this->related_posts as $post) : ?>
+			<li><?php echo anchor($post['permalink'], $post['title']); ?></li>
 			<?php endforeach; ?>
 		</ul>
 		<?php endif; ?>
