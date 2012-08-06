@@ -1,20 +1,19 @@
 <Files ~ "^.(htaccess|htpasswd)$">
 deny from all
 </Files>
-ErrorDocument 404 /errors
 RewriteEngine on
 RewriteBase /
 
-# with no www
-RewriteCond %{HTTP_HOST} ^(www\.mzs\.com)(:80)? [NC]
-RewriteRule ^(.*) http://mzs.com/$1 [R=301,L]
+# no www
+RewriteCond %{HTTP_HOST} ^(www\.zhoumiao\.com)(:80)? [NC]
+RewriteRule ^(.*) http://zhoumiao.com/$1 [R=301,L]
 
 # move index.php
-RewriteCond $1 !^(index\.php|favor\.ico|ueditor|assets|guide|bootstrap|robots\.txt)
+RewriteCond $1 !^(index\.php|favor\.ico|assets|guide|bootstrap|robots\.txt)
 RewriteRule ^(.*)$ /index.php/$1 [L]
 
 # redirect old post link
-RedirectMatch permanent ^/archives/(.*)$ http://mzs.com/post/$1
+RedirectMatch permanent ^/archives/(.*)$ http://zhoumiao.com/post/$1
 
 # redirect old page link
 Redirect permanent /flashplayer-download-directly /page/flashplayer-download-directly
@@ -22,5 +21,18 @@ Redirect permanent /About-Me /page/About-Me
 Redirect permanent /blog-archive /archive
 Redirect permanent /tag-cloud /tag
 Redirect permanent /message-board /message
+
+<IfModule mod_deflate.c>
+SetOutputFilter DEFLATE
+SetEnvIfNoCase Request_URI .(?:gif|jpe?g|png)$ no-gzip dont-vary #设置不对后缀gif，jpg，jpeg，png的图片文件进行压缩
+SetEnvIfNoCase Request_URI .(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary #同上，就是设置不对exe，tgz，gz。。。的文件进行压缩
+SetEnvIfNoCase Request_URI .(?:pdf|mov|avi|mp3|mp4|rm)$ no-gzip dont-vary
+AddOutputFilterByType DEFLATE text/*
+AddOutputFilterByType DEFLATE application/ms* application/vnd* application/postscript application/javascript application/x-javascript
+AddOutputFilterByType DEFLATE application/x-httpd-php application/x-httpd-fastphp
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
 
 order deny,allow

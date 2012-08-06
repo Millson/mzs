@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
+		<meta content="text/html" charset="utf-8" http-equiv="Content-Type" />
 		<title><?php echo $this->page_name; ?> - 三水志</title>
 		<meta name="description" content="">
 		<meta name="author" content="Millson Zhou">
@@ -21,9 +21,6 @@
 		<link rel="apple-touch-icon" href="<?php echo base_url('assets/img/apple-touch-icon.png'); ?>">
 		<link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url('assets/img/apple-touch-icon-72x72.png'); ?>">
 		<link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url('assets/img/apple-touch-icon-114x114.png'); ?>">
-
-		<script src="<?php echo base_url('assets/js/jquery.js'); ?>"></script>
-		<script src="<?php echo base_url('assets/js/bootstrap.js'); ?>"></script>
 	</head>
 
 	<body>
