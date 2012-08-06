@@ -2,7 +2,10 @@
 
 	<div class="row">
 		<div class="span9">
-			<span>选中项：<a id="del_tags" href="javascript:;">删除</a>,&nbsp;&nbsp;<a id="merge_tags" href="javascript:;">合并到</a>：<input type="text" name="to_tag" id="to_tag" placeholder="输入标签名" />
+			<span>选中项：
+					<a id="del_tags" href="javascript:;">删除</a>,&nbsp;&nbsp;
+					<a id="merge_tags" href="javascript:;">合并到</a>：
+						<input type="text" name="to_tag" id="to_tag" placeholder="输入标签名" data-provide="typeahead" data-source="<?php echo $this->tag_source; ?>" data-items="4" />
 			<hr />
 			<ul class="tag_box inline">
 				<?php foreach($this->metas as $meta) : ?>

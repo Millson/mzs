@@ -8,8 +8,10 @@ class Tag extends MZS_Controller
 	public $meta_name = '';
 	public $meta_slug = '';
 
+	public $tag_source;
+
 	public $type = 'tag';
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -28,19 +30,19 @@ class Tag extends MZS_Controller
 
 		$this->meta_name = '';
 
-		if($mid != 0) {
-			$this->mid = $mid;
+		$this->mid = $mid;
 
-			foreach($this->metas as $meta) {
-				if($meta['mid'] == $mid) {
-					$this->hidden['mid'] = $mid;
-					$this->meta_name = $meta['name'];
-					$this->meta_slug = $meta['slug'];
-
-					break;
-				}
+		foreach($this->metas as $meta) {
+			if($meta['mid'] == $mid) {
+				$this->hidden['mid'] = $mid;
+				$this->meta_name = $meta['name'];
+				$this->meta_slug = $meta['slug'];
 			}
+
+			$this->tag_source[] = $meta['name'];
 		}
+
+		$this->tag_source = htmlentities(json_encode($this->tag_source));
 
 		$this->load->view('admin/tag.php');
 	}
@@ -77,9 +79,9 @@ class Tag extends MZS_Controller
 		}
 
 		$to_tag = $this->input->post('to_tag');
-		
+
 		$to_mid = $this->meta_m->insert_tags($to_tag);
-		
+
 		$tags = $this->input->post('tags');
 		$tags = explode(",", $tags);
 

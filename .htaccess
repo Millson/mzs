@@ -14,6 +14,7 @@ RewriteRule ^(.*)$ /index.php/$1 [L]
 
 # redirect old post link
 RedirectMatch permanent ^/archives/(.*)$ http://zhoumiao.com/post/$1
+RedirectMatch permanent ^/page/([0-9]*)$ http://zhoumiao.com/
 
 # redirect old page link
 Redirect permanent /flashplayer-download-directly /page/flashplayer-download-directly
