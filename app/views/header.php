@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 	<head>
 		<meta content="text/html" charset="utf-8" http-equiv="Content-Type" />
 		<title><?php echo $this->page_name; ?> - 三水志</title>
