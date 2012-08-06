@@ -9,6 +9,8 @@ class MZS_Controller extends CI_Controller {
 	public $menu_pages;
 	public $permanent_pages;
 
+	public $cached = false;
+
 	public function __construct()
 	{
 		parent::__construct();
